@@ -1,0 +1,14 @@
+- name: Add keys to known_hosts
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: ssh keyscan bastion hosts from localhost
+      delegate_to: localhost
+      ansible.builtin.lineinfile:
+        dest: ~/.ssh/known_hosts
+        create: 'yes'
+        state: present
+        mode: '0600'
+        line: "{{ lookup('pipe', 'ssh-keyscan -H' + ' ' + item) }}"
+      loop:
+        - "70.112.86.236"
