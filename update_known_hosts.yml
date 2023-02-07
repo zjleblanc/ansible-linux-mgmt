@@ -9,6 +9,6 @@
         create: 'yes'
         state: present
         mode: '0600'
-        line: "{{ lookup('pipe', 'ssh-keyscan -H' + ' ' + item) }}"
+        line: "{{ item }}"
       loop:
-        - "70.112.86.236"
+        - "gateway.autodotes.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOfKLH2uVXzhXlEnAuVeAFHl80zm/hp7rmQyY7vJB5VF"
