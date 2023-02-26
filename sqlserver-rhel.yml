@@ -1,0 +1,19 @@
+### Reference MS Docs:
+### https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-red-hat?view=sql-server-ver16
+
+---
+- name: Install MS SQL Server on RHEL
+  hosts: all
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: Report Ansible Facts
+      ansible.builtin.debug:
+        var: ansible_facts
+
+    - name: Setup MSSQL
+      vars:
+        mssql_sa_pwd: "{{ sa_password }}"
+      ansible.builtin.include_role:
+        name: mssql

@@ -1,0 +1,87 @@
+---
+- name: Setup postgres
+  hosts: rhel8
+  gather_facts: false
+  become: true
+
+  vars:
+    postgres_conf: /var/lib/pgsql/data/postgresql.conf
+    postgres_hba: /var/lib/pgsql/data/pg_hba.conf
+    postgres_user: ee_wizard
+    postgres_pwd: "{{ ee_wizard_pwd }}"
+    postgres_db: pypi
+    postgres_table: packages
+
+  tasks:
+    - name: Install packages
+      ansible.builtin.yum:
+        name:
+          - postgresql
+          - postgresql-server
+          - postgresql-contrib
+          - postgresql-libs
+          - python3-psycopg2
+        state: present
+
+    - name: Check if PostgreSQL is initialized
+      register: postgres_data
+      ansible.builtin.stat:
+        path: "{{ postgres_hba }}"
+
+    - name: Initialize PostgreSQL
+      when: not postgres_data.stat.exists
+      ansible.builtin.command: "postgresql-setup initdb"
+
+    - name: Grant remote access to pypi for ee_wizard on lab network
+      community.postgresql.postgresql_pg_hba:
+        dest: "{{ postgres_hba }}"
+        contype: host
+        users: ee_wizard
+        source: samenet
+        databases: pypi
+        method: scram-sha-256
+        create: true
+
+    - name: Set listen_addresses
+      ansible.builtin.lineinfile:
+        dest: "{{ postgres_conf }}"
+        regexp: "listen_addresses ="
+        line: "listen_addresses = '*'"
+        state: present
+
+    - name: Start and enable service
+      ansible.builtin.service:
+        name: postgresql
+        state: started
+        enabled: true
+
+    - name: Permit traffic in default zone for postgres service
+      ansible.posix.firewalld:
+        port: 5432/tcp
+        permanent: true
+        immediate: true
+        state: enabled
+
+    - name: Run operations on postgres server
+      become_user: postgres
+      block:
+        - name: Create a new database with name pypi
+          community.postgresql.postgresql_db:
+            name: "{{ postgres_db }}"
+            state: present
+
+        - name: Create packages table
+          community.postgresql.postgresql_table:
+            db: "{{ postgres_db }}"
+            name: "{{ postgres_table }}"
+            columns:
+              - name varchar(100) primary key
+
+        - name: Connect to pypi database, create ee-wizard user, and grant access to database and packages table
+          environment:
+            PGOPTIONS: "-c password_encryption=scram-sha-256"
+          community.postgresql.postgresql_user:
+            db: "{{ postgres_db }}"
+            name: "{{ postgres_user }}"
+            password: "{{ ee_wizard_pwd }}"
+            priv: "CONNECT/{{ postgres_table }}:ALL"
