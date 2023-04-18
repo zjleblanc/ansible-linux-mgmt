@@ -1,5 +1,5 @@
 ---
-- name: Basic fact gathering demo
+- name: Basic fact gathering playbook
   hosts: all
   gather_facts: true
 

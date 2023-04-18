@@ -3,9 +3,9 @@
 Ansible repository for content used to manage Linux servers
 
 ## Playbooks
-- [debug.yml](./debug.yml)
-- [postgres.yml](./postgres.yml)
-- [sqlserver-rhel.yml](./sqlserver-rhel.yml)
+- [debug.yml](./playbooks/debug.yml)
+- [postgres.yml](./playbooks/postgres.yml)
+- [sqlserver-rhel.yml](./playbooks/sqlserver-rhel.yml)
 
 ## Roles
 - [mssql](./roles/mssql/README.md)
