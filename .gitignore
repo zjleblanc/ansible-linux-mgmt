@@ -1,6 +1,7 @@
 .venv/
 .vscode/
 
+ansible.cfg
 **/ansible-navigator.log
 execution-environments/**/context/
 demos/local_vars/
