@@ -1,0 +1,8 @@
+.venv/
+.vscode/
+
+**/ansible-navigator.log
+execution-environments/**/context/
+demos/local_vars/
+
+**/.yamllint

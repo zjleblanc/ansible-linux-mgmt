@@ -1,0 +1,65 @@
+---
+- name: Create Proxmox VMs
+  hosts: controlbox
+  connection: local
+
+  tasks:
+    - name: Assert required proxmox creds
+      ansible.builtin.assert:
+        that:
+          - proxmox_api_host is defined
+          - proxmox_api_user is defined
+          - proxmox_api_token_id is defined
+          - proxmox_api_token_secret is defined
+        fail_msg: "Missing one of the required proxmox authentication variables - promox_api_[host|user|token_id|token_secret]"
+
+    - name: Build Containers via defined configs
+      when: proxmox_ve_configs is defined
+      loop: "{{ proxmox_ve_configs }}"
+      loop_control:
+        loop_var: pve_config
+      community.general.proxmox:
+        api_host: "{{ proxmox_api_host }}"
+        api_token_id: "{{ proxmox_api_token_id }}"
+        api_token_secret: "{{ proxmox_api_token_secret }}"
+        api_user: "{{ proxmox_api_user }}"
+        cores: "{{ pve_config.cores | default(omit) }}"
+        description: "{{ pve_config.description | default('Created with ansible.') }}"
+        disk: "{{ pve_config.disk | default(omit) }}"
+        hookscript: "{{ pve_config.hookscript | default(omit) }}"
+        hostname: "{{ pve_config.hostname | default(omit) }}"
+        memory: "{{ pve_config.memory | default(omit) }}"
+        mounts: "{{ pve_config.mounts | default(omit) }}"
+        nameserver: "{{ pve_config.nameserver | default(omit) }}"
+        node: "{{ pve_config.node }}"
+        onboot: "{{ pve_config.onboot | default(false) }}"
+        ostemplate: "{{ pve_config.ostemplate | default(omit) }}"
+        pubkey: "{{ pve_config.pubkey | default(omit) }}"
+        state: present
+        storage: "{{ pve_config.storage | default('local-lvm') }}"
+        tags: "{{ pve_config.tags | default(omit) }}"
+        timeout: "{{ pve_config.timeout | default(1200) }}"
+
+    - name: Build Containers from survey
+      when: use_pve_survey | default(false)
+      community.general.proxmox:
+        api_host: "{{ proxmox_api_host }}"
+        api_token_id: "{{ proxmox_api_token_id }}"
+        api_token_secret: "{{ proxmox_api_token_secret }}"
+        api_user: "{{ proxmox_api_user }}"
+        cores: "{{ pve_survey_cores | default(omit) }}"
+        description: "{{ pve_survey_description | default('Created with ansible.') }}"
+        disk: "{{ pve_survey_disk | default(omit) }}"
+        hookscript: "{{ pve_survey_hookscript | default(omit) }}"
+        hostname: "{{ pve_survey_hostname | default(omit) }}"
+        memory: "{{ pve_survey_memory | default(omit) }}"
+        mounts: "{{ pve_survey_mounts | default(omit) }}"
+        nameserver: "{{ pve_survey_nameserver | default(omit) }}"
+        node: "{{ pve_survey_node }}"
+        onboot: "{{ pve_survey_onboot | default(false) }}"
+        ostemplate: "{{ pve_survey_ostemplate | default(omit) }}"
+        pubkey: "{{ pve_survey_pubkey | default(omit) }}"
+        state: present
+        storage: "{{ pve_survey_storage | default('local-lvm') }}"
+        tags: "{{ pve_survey_tags | default(omit) }}"
+        timeout: "{{ pve_survey_timeout | default(1200) }}"

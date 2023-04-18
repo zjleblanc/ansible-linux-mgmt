@@ -1,0 +1,13 @@
+---
+- name: Basic fact gathering demo
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: Debug
+      ansible.builtin.debug:
+        var: ansible_facts
+
+    - name: Print out the Distribution
+      ansible.builtin.debug:
+        msg: "I am a {{ ansible_facts.distribution | default('¯\_(ツ)_/¯') }} machine."

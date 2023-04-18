@@ -1,8 +1,0 @@
----
-- name: Ping box
-  hosts: all
-  gather_facts: yes
-  tasks:
-    - name: Debug
-      ansible.builtin.debug:
-        var: ansible_facts
