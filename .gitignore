@@ -6,4 +6,5 @@ ansible.cfg
 execution-environments/**/context/
 demos/local_vars/
 
+*.log
 **/.yamllint

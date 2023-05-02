@@ -3,7 +3,7 @@
 
 ---
 - name: Install MS SQL Server on RHEL
-  hosts: all
+  hosts: "{{ ansible_limit | default(omit) }}"
   gather_facts: true
   become: true
 
