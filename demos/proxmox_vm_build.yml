@@ -1,0 +1,68 @@
+---
+- name: Create Proxmox VMs
+  hosts: controlbox
+  connection: local
+
+  tasks:
+    - name: Assert required proxmox creds
+      ansible.builtin.assert:
+        that:
+          - proxmox_api_host is defined
+          - proxmox_api_user is defined
+          - proxmox_api_token_id is defined
+          - proxmox_api_token_secret is defined
+        fail_msg: "Missing one of the required proxmox authentication variables - promox_api_[host|user|token_id|token_secret]"
+
+    - name: Build VMs via defined configs
+      when: proxmox_vm_configs is defined
+      loop: "{{ proxmox_vm_configs }}"
+      loop_control:
+        loop_var: pve_config
+      community.general.proxmox_kvm:
+        api_host: "{{ proxmox_api_host }}"
+        api_token_id: "{{ proxmox_api_token_id }}"
+        api_token_secret: "{{ proxmox_api_token_secret }}"
+        api_user: "{{ proxmox_api_user }}"
+        cores: "{{ pve_config.cores | default(omit) }}"
+        cpu: "{{ pve_config.cpu | default(omit) }}"
+        description: "{{ pve_config.description | default('Created with ansible.') }}"
+        ide: "{{ pve_config.ide | default(omit) }}"
+        memory: "{{ pve_config.memory | default(omit) }}"
+        name: "{{ pve_config.name | default(omit) }}"
+        net: "{{ pve_config.net | default(omit) }}"
+        node: "{{ pve_config.node }}"
+        numa: "{{ pve_config.numa | default(omit) }}"
+        onboot: "{{ pve_config.onboot | default(false) }}"
+        ostype: "{{ pve_config.ostype | default(omit) }}"
+        scsi: "{{ pve_config.scsi | default(omit) }}"
+        scsihw: "{{ pve_config.scsihw | default(omit) }}"
+        sockets: "{{ pve_config.sockets | default(omit) }}"
+        state: present
+        tags: "{{ pve_config.tags | default(omit) }}"
+        timeout: "{{ pve_config.timeout | default(1200) }}"
+        virtio: "{{ pve_config.virtio | default(omit) }}"
+
+    - name: Build virtual machine from survey
+      when: use_pve_survey | default(false)
+      community.general.proxmox_kvm:
+        api_host: "{{ proxmox_api_host }}"
+        api_token_id: "{{ proxmox_api_token_id }}"
+        api_token_secret: "{{ proxmox_api_token_secret }}"
+        api_user: "{{ proxmox_api_user }}"
+        cores: "{{ pve_survey_cores | default(omit) }}"
+        cpu: "{{ pve_survey_cpu | default(omit) }}"
+        description: "{{ pve_survey_description | default('Created with ansible.') }}"
+        ide: "{{ pve_survey_ide | default(omit) }}"
+        memory: "{{ pve_survey_memory | default(omit) }}"
+        name: "{{ pve_survey_name | default(omit) }}"
+        net: "{{ pve_survey_net | default(omit) }}"
+        node: "{{ pve_survey_node }}"
+        numa: "{{ pve_survey_numa | default(omit) }}"
+        onboot: "{{ pve_survey_onboot | default(false) }}"
+        ostype: "{{ pve_survey_ostype | default(omit) }}"
+        scsi: "{{ pve_survey_scsi | default(omit) }}"
+        scsihw: "{{ pve_survey_scsihw | default(omit) }}"
+        sockets: "{{ pve_survey_sockets | default(omit) }}"
+        state: present
+        tags: "{{ pve_survey_tags | default(omit) }}"
+        timeout: "{{ pve_survey_timeout | default(1200) }}"

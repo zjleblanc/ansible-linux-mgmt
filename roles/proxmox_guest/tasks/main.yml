@@ -1,0 +1,74 @@
+---
+- name: Initialize KVM
+  register: r_proxmox_guest
+  community.general.proxmox_kvm:
+    api_host: "{{ proxmox_api_host }}"
+    # api_token_id: "{{ proxmox_api_token_id }}"
+    # api_token_secret: "{{ proxmox_api_token_secret }}"
+    api_user: "{{ proxmox_api_user }}"
+    api_password: "{{ proxmox_api_password }}"
+    args: "{{ pve_config.args | default(omit) }}"
+    cores: "{{ pve_config.cores | default(omit) }}"
+    cpu: "{{ pve_config.cpu | default(omit) }}"
+    description: "{{ pve_config.description | default('Created with ansible.') }}"
+    ide: "{{ pve_config.ide | default(omit) }}"
+    memory: "{{ pve_config.memory | default(omit) }}"
+    name: "{{ pve_config.name | default(omit) }}"
+    net: "{{ pve_config.net | default(omit) }}"
+    node: "{{ pve_config.node }}"
+    numa: "{{ pve_config.numa | default(omit) }}"
+    onboot: "{{ pve_config.onboot | default(false) }}"
+    ostype: "{{ pve_config.ostype | default(omit) }}"
+    scsi: "{{ pve_config.scsi | default(omit) }}"
+    scsihw: "{{ pve_config.scsihw | default(omit) }}"
+    sockets: "{{ pve_config.sockets | default(omit) }}"
+    state: present
+    tags: "{{ pve_config.tags | default(omit) }}"
+    timeout: "{{ pve_config.timeout | default(1200) }}"
+    virtio: "{{ pve_config.virtio | default(omit) }}"
+
+- name: Import kvm rhel image
+  delegate_to: pve
+  register: r_qm_importdisk
+  changed_when: "'imported' in r_qm_importdisk.stdout_lines[-1]"
+  failed_when: "'Success' not in r_qm_importdisk.stdout_lines[-1]"
+  ansible.builtin.command:
+    cmd: "qm importdisk {{ r_proxmox_guest.vmid }} {{ pve_config.kvm }} local-lvm"
+    chdir: /var/lib/vz/template/qemu
+
+- name: Print stdout for importdisk
+  ansible.builtin.debug:
+    var: r_qm_importdisk.stdout_lines
+
+- name: Add disk
+  ansible.builtin.uri:
+    url: "https://{{ proxmox_api_host }}:8006/api2/extjs/nodes/pve/qemu/{{ r_proxmox_guest.vmid }}/config"
+    method: post
+    headers:
+      Authorization: "PVEAPIToken={{ proxmox_api_user }}!{{ proxmox_api_token_id }}={{ proxmox_api_token_secret }}"
+    body:
+      virtio1: "local-lvm:vm-{{ r_proxmox_guest.vmid }}-disk-0,iothread=on"
+      background_delay: 5
+    body_format: form-urlencoded
+
+- name: Set boot order
+  ansible.builtin.uri:
+    url: "https://{{ proxmox_api_host }}:8006/api2/extjs/nodes/pve/qemu/{{ r_proxmox_guest.vmid }}/config"
+    method: post
+    headers:
+      Authorization: "PVEAPIToken={{ proxmox_api_user }}!{{ proxmox_api_token_id }}={{ proxmox_api_token_secret }}"
+    body:
+      boot: order=virtio1;virtio0;ide2;net0
+    body_format: form-urlencoded
+
+- name: Start KVM
+  register: r_proxmox_guest
+  community.general.proxmox_kvm:
+    api_host: "{{ proxmox_api_host }}"
+    api_token_id: "{{ proxmox_api_token_id }}"
+    api_token_secret: "{{ proxmox_api_token_secret }}"
+    api_user: "{{ proxmox_api_user }}"
+    name: "{{ pve_config.name | default(omit) }}"
+    node: "{{ pve_config.node }}"
+    state: started
+    timeout: 120
