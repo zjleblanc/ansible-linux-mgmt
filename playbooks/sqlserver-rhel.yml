@@ -8,11 +8,8 @@
   become: true
 
   tasks:
-    - name: Report Ansible Facts
-      ansible.builtin.debug:
-        var: ansible_facts
-
     - name: Setup MSSQL
+      tags: always
       vars:
         mssql_sa_pwd: "{{ sa_password }}"
       ansible.builtin.include_role:
