@@ -28,6 +28,16 @@
     MSSQL_TCP_PORT: "{{ mssql_tcp_port }}"
   ansible.builtin.command: /opt/mssql/bin/mssql-conf -n setup
 
+- name: Install packages
+  ansible.builtin.package:
+    name: firewalld
+    state: present
+
+- name: Install packages
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+
 - name: Permit traffic in public zone for mssql service
   tags: configure
   ansible.posix.firewalld:
