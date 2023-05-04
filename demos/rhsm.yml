@@ -4,6 +4,9 @@
   become: true
 
   tasks:
+    - name: Wait 10 min for target
+      ansible.builtin.wait_for_connection:
+
     - name: Register machine
       community.general.redhat_subscription:
         state: present
