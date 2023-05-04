@@ -1,9 +1,6 @@
 ---
 - name: Create Proxmox KVM Guest
-  hosts: controlbox
-
-  vars_files:
-    - "{{ playbook_dir }}/local_vars/proxmox_kvm_guest.yml"
+  hosts: localhost
 
   tasks:
     - name: Assert required proxmox creds
