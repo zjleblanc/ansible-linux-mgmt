@@ -4,6 +4,7 @@
 
   tasks:
     - name: Register machine
+      become: true
       community.general.redhat_subscription:
         state: present
         username: "{{ rhsm_user }}"
