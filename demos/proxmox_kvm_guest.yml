@@ -1,6 +1,6 @@
 ---
 - name: Create Proxmox KVM Guest
-  hosts: controlbox
+  hosts: localhost
 
   tasks:
     - name: Assert required proxmox creds
