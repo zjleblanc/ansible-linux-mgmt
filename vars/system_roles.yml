@@ -1,0 +1,91 @@
+# For use with RH Gov Product Demos
+# Linux // System Roles
+---
+system_roles:
+  - selinux
+  - kernel_settings
+  # - network
+  - firewall
+  - logging
+  - sshd
+  - cockpit
+
+# selinux
+selinux_policy: targeted
+selinux_state: enforcing
+
+# kernel_settings
+kernel_settings_sysctl:
+  - name: fs.file-max
+    value: 400000
+  - name: kernel.threads-max
+    value: 65536
+kernel_settings_sysfs:
+  - name: /sys/class/net/lo/mtu
+    value: 65000
+kernel_settings_transparent_hugepages: madvise
+
+# network
+network_connections:
+  - name: enp7s0
+    interface_name: enp7s0
+    type: ethernet
+    autoconnect: yes
+    ip:
+      address:
+        - 192.0.2.1/24
+        - 2001:db8:1::1/64
+      gateway4: 192.0.2.254
+      gateway6: 2001:db8:1::fffe
+      dns:
+        - 192.0.2.200
+        - 2001:db8:1::ffbb
+      dns_search:
+        - example.com
+    state: up
+
+firewall:
+    # Forward incoming traffic on port 8080 to 443
+  - service: cockpit
+    state: enabled
+  - forward_port: 8080/tcp;443;
+    state: enabled
+    runtime: true
+    permanent: true
+    # Allow incoming https traffic
+  - port: 443/tcp
+    service: http
+    state: enabled
+    runtime: true
+    permanent: true
+    # Create a DMZ with access to HTTPs port
+  # - zone: dmz
+  #   interface: enp1s0
+  #   service: https
+  #   state: enabled
+  #   runtime: true
+  #   permanent: true
+
+# logging
+logging_inputs:
+  - name: system_input
+    type: basics
+logging_outputs:
+  - name: files_output
+    type: files
+logging_flows:
+  - name: flow1
+    inputs: [system_input]
+    outputs: [files_output]
+
+sshd:
+  # root login and password login is enabled only from a particular subnet
+  PermitRootLogin: no
+  PasswordAuthentication: no
+  Match:
+  - Condition: "Address 192.0.2.0/24"
+    PermitRootLogin: yes
+    PasswordAuthentication: yes
+
+# cockpit
+cockpit_packages: default
