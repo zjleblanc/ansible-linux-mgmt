@@ -1,5 +1,6 @@
 .venv/
 .vscode/
+sandbox
 
 ansible.cfg
 **/ansible-navigator.log
