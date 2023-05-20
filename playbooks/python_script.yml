@@ -1,0 +1,20 @@
+---
+- name: Use python script
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Run script
+      register: r_script_output
+      args:
+        executable: python3
+      ansible.builtin.script: "{{ playbook_dir }}/../scripts/python/generate_json.py"
+
+    - name: Create fact
+      ansible.builtin.set_fact:
+        python_data: "{{ r_script_output.stdout | from_json }}"
+
+    - name: Debug it again
+      ansible.builtin.debug:
+        msg: "{{ python_data.name }} works for {{ python_data.company }}"
