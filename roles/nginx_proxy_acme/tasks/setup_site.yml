@@ -1,0 +1,21 @@
+---
+- name: Template nginx site conf
+  ansible.builtin.template:
+    src: site.conf.j2
+    dest: "/etc/nginx/sites-available/{{ acme_domain_name }}.conf"
+    owner: root
+    group: root
+    mode: '0664'
+
+- name: Create sites-enabled symlink
+  ansible.builtin.file:
+    src: "/etc/nginx/sites-available/{{ acme_domain_name }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ acme_domain_name }}.conf"
+    owner: root
+    group: root
+    state: link
+
+- name: Restart nginx
+  ansible.builtin.service:
+    name: nginx
+    state: restarted

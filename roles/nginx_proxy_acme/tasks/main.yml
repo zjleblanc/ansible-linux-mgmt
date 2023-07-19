@@ -1,0 +1,29 @@
+---
+- name: Install required python packages
+  ansible.builtin.pip:
+    name:
+      - setuptools
+      - cryptography
+    state: present
+
+- name: Check if cert exists
+  ansible.builtin.stat:
+    path: "{{ letsencrypt_certs_dir }}/fullchain_{{ acme_domain_name }}.pem"
+  register: r_crt_stat
+
+- name: Check validity of existing cert
+  when: r_crt_stat.stat.exists
+  community.crypto.x509_certificate_info:
+    path: "{{ letsencrypt_certs_dir }}/fullchain_{{ acme_domain_name }}.pem"
+    valid_at:
+      one_month: "+{{ acme_valid_days }}d"
+  register: r_crt_info
+
+- name: "Configure nginx site with ssl | {{ acme_domain_name }}"
+  when: not r_crt_stat.stat.exists or not r_crt_info.valid_at.one_month|default(false)
+  block:
+    - name: "Setup site | {{ acme_domain_name }}"
+      include_tasks: setup_site.yml
+
+    - name: "Generate cert | {{ acme_domain_name }}"
+      include_tasks: generate_crt.yml
