@@ -10,7 +10,7 @@
     uwsgi_bash: "bash -c"
 
   handlers:
-    - name: restart supervisor
+    - name: Restart supervisor
       ansible.builtin.debug:
         msg: Restarting supervisor.
       changed_when: true
@@ -19,12 +19,12 @@
         - Wait for supervisor to stop.
         - Start supervisor.
     - name: Stop supervisor.
-      service:
+      ansible.builtin.service:
         name: 'supervisord'
         state: stopped
 
     - name: Wait for supervisor to stop.
-      stat:
+      ansible.builtin.stat:
         path: '/var/run/supervisor/supervisor.sock'
       register: result
       until: not result.stat.exists
@@ -32,7 +32,7 @@
       delay: 2
 
     - name: Start supervisor.
-      service:
+      ansible.builtin.service:
         name: 'supervisord'
         state: started
 
@@ -61,7 +61,7 @@
         value: "{{ uwsgi_listen_queue_size }}"
         sysctl_set: true
 
-    - name: Install supervisor config
+    - name: Install supervisor config # noqa: risky-file-permissions
       ansible.builtin.template:
         src: 'tower.conf.j2'
         dest: '/etc/supervisord.d/tower.ini'
@@ -70,7 +70,7 @@
         - restart supervisor
 
     - name: Override supervisord logrotate rules
-      copy:
+      ansible.builtin.copy:
         src: files/supervisor_logrotate
         dest: /etc/logrotate.d/supervisor
         owner: root
@@ -79,16 +79,16 @@
 
     # This is necessary due to an error where awx did not have permission to read
     # /var/run/supervisor. Telling systemd to recreate its tmp files fixes this.
-    - name: Recreate systemd tmp files
-      command: systemd-tmpfiles --create
+    - name: Recreate systemd tmp files # noqa: no-changed-when
+      ansible.builtin.command: systemd-tmpfiles --create
 
-    - name: start/enable supervisord process
-      service:
+    - name: Start/enable supervisord process
+      ansible.builtin.service:
         name: 'supervisord'
         state: started
-        enabled: yes
+        enabled: true
 
     - name: Wait for the supervisor socket
-      wait_for:
+      ansible.builtin.wait_for:
         path: '/var/run/supervisor/supervisor.sock'
         timeout: 30
