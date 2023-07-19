@@ -1,4 +1,4 @@
-# python_script
+# configure nginx site with ssl
 
 This playbook takes a domain name and configures a site on an nginx reverse proxy with a valid acme certificate.
 
