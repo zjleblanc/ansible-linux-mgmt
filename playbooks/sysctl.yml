@@ -1,0 +1,94 @@
+---
+- name: Sysctl settings
+  hosts: controller
+  gather_facts: false
+  become: true
+
+  vars:
+    supervisor_exec_vars_only: false
+    uwsgi_listen_queue_size: 4096
+    uwsgi_bash: "bash -c"
+
+  handlers:
+    - name: restart supervisor
+      ansible.builtin.debug:
+        msg: Restarting supervisor.
+      changed_when: true
+      notify:
+        - Stop supervisor.
+        - Wait for supervisor to stop.
+        - Start supervisor.
+    - name: Stop supervisor.
+      service:
+        name: 'supervisord'
+        state: stopped
+
+    - name: Wait for supervisor to stop.
+      stat:
+        path: '/var/run/supervisor/supervisor.sock'
+      register: result
+      until: not result.stat.exists
+      retries: 10
+      delay: 2
+
+    - name: Start supervisor.
+      service:
+        name: 'supervisord'
+        state: started
+
+  tasks:
+    - name: Check current somaxconn value
+      ansible.builtin.slurp:
+        src: /proc/sys/net/core/somaxconn
+      register: somaxconn
+
+    - name: Check current net.ipv4.tcp_max_syn_backlog value
+      ansible.builtin.slurp:
+        src: /proc/sys/net/ipv4/tcp_max_syn_backlog
+      register: tcp_max_syn_backlog
+
+    - name: Set somaxconn to value greater than or equal to uwsgi_listen_queue_size in supervisor config
+      when: (uwsgi_listen_queue_size | int) > (somaxconn['content'] | b64decode | int)
+      ansible.posix.sysctl:
+        name: net.core.somaxconn
+        value: "{{ uwsgi_listen_queue_size }}"
+        sysctl_set: true
+
+    - name: Set tcp_max_syn_backlog to value greater than or equal to uwsgi_listen_queue_size in supervisor config
+      when: (uwsgi_listen_queue_size | int) > (tcp_max_syn_backlog['content'] | b64decode | int)
+      ansible.posix.sysctl:
+        name: net.ipv4.tcp_max_syn_backlog
+        value: "{{ uwsgi_listen_queue_size }}"
+        sysctl_set: true
+
+    - name: Install supervisor config
+      ansible.builtin.template:
+        src: 'tower.conf.j2'
+        dest: '/etc/supervisord.d/tower.ini'
+        force: true
+      notify:
+        - restart supervisor
+
+    - name: Override supervisord logrotate rules
+      copy:
+        src: files/supervisor_logrotate
+        dest: /etc/logrotate.d/supervisor
+        owner: root
+        group: root
+        mode: '0644'
+
+    # This is necessary due to an error where awx did not have permission to read
+    # /var/run/supervisor. Telling systemd to recreate its tmp files fixes this.
+    - name: Recreate systemd tmp files
+      command: systemd-tmpfiles --create
+
+    - name: start/enable supervisord process
+      service:
+        name: 'supervisord'
+        state: started
+        enabled: yes
+
+    - name: Wait for the supervisor socket
+      wait_for:
+        path: '/var/run/supervisor/supervisor.sock'
+        timeout: 30
