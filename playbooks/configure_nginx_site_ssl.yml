@@ -1,0 +1,11 @@
+---
+- name: Configure site with ssl on nginx reverse proxy
+  hosts: "{{ _host | default('omit') }}"
+  gather_facts: false
+  become: true
+
+  roles:
+    - name: nginx_proxy_acme
+      vars:
+        acme_domain_name: acme.autodotes.com
+        acme_email: "{{ _email }}"

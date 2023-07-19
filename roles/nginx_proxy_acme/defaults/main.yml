@@ -7,4 +7,11 @@ acme_letsencrypt_keys_dir: "{{ acme_letsencrypt_dir }}/keys"
 acme_letsencrypt_csrs_dir: "{{ acme_letsencrypt_dir }}/csrs"
 acme_letsencrypt_certs_dir: "{{ acme_letsencrypt_dir }}/certs"
 acme_letsencrypt_account_key: "{{ acme_letsencrypt_dir }}/account/account.key"
+acme_required_dirs:
+  - "{{ acme_letsencrypt_dir }}"
+  - "{{ acme_letsencrypt_keys_dir }}"
+  - "{{ acme_letsencrypt_csrs_dir }}"
+  - "{{ acme_letsencrypt_certs_dir }}"
+
 acme_valid_days: "30" # if expiring in <= acme_valid_days, generate new cert
+acme_site_root: "/var/www/html/{{ acme_domain_name }}" # directory for site root if proxy not used

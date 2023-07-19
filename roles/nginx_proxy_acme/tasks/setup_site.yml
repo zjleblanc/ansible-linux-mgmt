@@ -1,13 +1,35 @@
 ---
+- name: Template default html content
+  when: acme_private_ip is not defined
+  block:
+    - name: Create site root directory
+      ansible.builtin.file:
+        path: "{{ acme_site_root }}"
+        state: directory
+        owner: root
+        group: root
+        mode: u=rwx,g=x,o=x
+
+    - name: Template landing page
+      notify: Reload nginx
+      ansible.builtin.template:
+        src: index.html.j2
+        dest: "{{ acme_site_root }}/index.html"
+        owner: root
+        group: root
+        mode: '0664'
+
 - name: Template nginx site conf
+  notify: Reload nginx
   ansible.builtin.template:
-    src: site.conf.j2
+    src: site-http.conf.j2
     dest: "/etc/nginx/sites-available/{{ acme_domain_name }}.conf"
     owner: root
     group: root
     mode: '0664'
 
 - name: Create sites-enabled symlink
+  notify: Reload nginx
   ansible.builtin.file:
     src: "/etc/nginx/sites-available/{{ acme_domain_name }}.conf"
     dest: "/etc/nginx/sites-enabled/{{ acme_domain_name }}.conf"
@@ -15,7 +37,5 @@
     group: root
     state: link
 
-- name: Restart nginx
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
+- name: Prep for acme challenge
+  ansible.builtin.meta: flush_handlers

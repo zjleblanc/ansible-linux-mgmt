@@ -6,15 +6,26 @@
       - cryptography
     state: present
 
+- name: Create required directories
+  loop: "{{ acme_required_dirs }}"
+  loop_control:
+    loop_var: path
+  ansible.builtin.file:
+    path: "{{ path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=x,o=x
+
 - name: Check if cert exists
   ansible.builtin.stat:
-    path: "{{ letsencrypt_certs_dir }}/fullchain_{{ acme_domain_name }}.pem"
+    path: "{{ acme_letsencrypt_certs_dir }}/fullchain_{{ acme_domain_name }}.pem"
   register: r_crt_stat
 
 - name: Check validity of existing cert
   when: r_crt_stat.stat.exists
   community.crypto.x509_certificate_info:
-    path: "{{ letsencrypt_certs_dir }}/fullchain_{{ acme_domain_name }}.pem"
+    path: "{{ acme_letsencrypt_certs_dir }}/fullchain_{{ acme_domain_name }}.pem"
     valid_at:
       one_month: "+{{ acme_valid_days }}d"
   register: r_crt_info

@@ -1,38 +1,65 @@
-Role Name
+nginx_proxy_acme
 =========
 
-A brief description of the role goes here.
+Minimum Ansible Version: 2.1
 
-Requirements
-------------
+Galaxy Tags: \[ acme cert letsencrypt \]
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Required Variables
+------------------
+
+| Name | Example | Description |
+| -------- | ------- | ------------------- |
+| acme_email | acme-sa@example.com | e-mail address to receive acme notifications |
+| acme_domain_name | ansible.example.com | certificate common name |
+
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+| Variable | Type | Value or Expression | Description |
+| -------- | ------- | ------------------- | --------- |
+| acme_letsencrypt_dir | default | /etc/letsencrypt |  |
+| acme_letsencrypt_keys_dir | default | {{ acme_letsencrypt_dir }}/keys |  |
+| acme_letsencrypt_csrs_dir | default | {{ acme_letsencrypt_dir }}/csrs |  |
+| acme_letsencrypt_certs_dir | default | {{ acme_letsencrypt_dir }}/certs |  |
+| acme_letsencrypt_account_key | default | {{ acme_letsencrypt_dir }}/account/account.key |  |
+| acme_required_dirs | default | _above directories_ |  |
+| acme_valid_days | default | 30 | if expiring in <= acme_valid_days, generate new cert |
+| acme_site_root | default | /var/www/html/{{ acme_domain_name }} | directory for site root if proxy not used |
+| acme_private_ip | 192.168.0.x | private ip address for reverse proxy to direct traffic |
+| acme_challenge_type | var | http-01 |  |
+| acme_directory | var | https://acme-v02.api.letsencrypt.org/directory |  |
+| acme_version | var | 2 |  |
 
-Dependencies
-------------
+Handlers
+--------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+  - Restart nginx
+  - Reload nginx
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yaml
+  - hosts: servers
+    tasks:
+      - name: Execute nginx_proxy_acme role
+        ansible.builtin.include_role:
+          name: nginx_proxy_acme
+        vars:
+          acme_email: acme-sa@example.com
+          acme_domain_name: ansible.example.com
+          acme_private_ip: 192.168.0.x
+```
 
 License
 -------
 
-BSD
+license (GPL-2.0-or-later, MIT, etc)
 
 Author Information
-------------------
+-------
+**Zach LeBlanc**
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Red Hat

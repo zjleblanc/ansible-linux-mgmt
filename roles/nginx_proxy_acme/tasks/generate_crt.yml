@@ -37,13 +37,14 @@
 
 - name: Implement http-01 challenge files
   ansible.builtin.copy:
-    content: "{{ r_acme_challenge['challenge_data'][domain_name]['http-01']['resource_value'] }}"
-    dest: "/var/www/html/{{ r_acme_challenge['challenge_data'][domain_name]['http-01']['resource'] }}"
+    content: "{{ r_acme_challenge['challenge_data'][acme_domain_name]['http-01']['resource_value'] }}"
+    dest: "/var/www/html/{{ r_acme_challenge['challenge_data'][acme_domain_name]['http-01']['resource'] }}"
     owner: root
     group: root
     mode: u=rw,g=r,o=r
 
 - name: Complete Let's Encrypt challenges
+  notify: Restart nginx
   community.crypto.acme_certificate:
     acme_directory: "{{ acme_directory }}"
     acme_version: "{{ acme_version }}"
@@ -55,3 +56,12 @@
     chain_dest: "{{ acme_letsencrypt_certs_dir }}/chain_{{ acme_domain_name }}.pem"
     fullchain_dest: "{{ acme_letsencrypt_certs_dir }}/fullchain_{{ acme_domain_name }}.pem"
     data: "{{ r_acme_challenge }}"
+
+- name: Template nginx site conf
+  notify: Restart nginx
+  ansible.builtin.template:
+    src: site-ssl.conf.j2
+    dest: "/etc/nginx/sites-available/{{ acme_domain_name }}.conf"
+    owner: root
+    group: root
+    mode: '0664'
