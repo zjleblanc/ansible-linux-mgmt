@@ -4,9 +4,13 @@
   gather_facts: true
 
   tasks:
-    - name: Debug
+    - name: Debug ansible facts
       ansible.builtin.debug:
         var: ansible_facts
+
+    - name: Debug hostvars
+      ansible.builtin.debug:
+        msg: "{{ hostvars[inventory_hostname] }}"
 
     - name: Print out the Distribution
       ansible.builtin.debug:
