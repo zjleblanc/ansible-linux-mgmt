@@ -18,10 +18,10 @@
       loop: "{{ _domains }}"
       loop_control:
         loop_var: domain
-        label: "{{ domain.name }}=>{{ domain.private_ip }}"
+        label: "{{ domain.name }}=>{{ domain.private_ip | default('proxy') }}"
       ansible.builtin.include_role:
         name: nginx_proxy_acme
       vars:
         acme_domain_name: "{{ domain.name }}"
         acme_email: "{{ _email }}"
-        acme_private_ip: "{{ domain.private_ip }}"
+        acme_private_ip: "{{ domain.private_ip | default(omit) }}"

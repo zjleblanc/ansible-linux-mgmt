@@ -2,5 +2,4 @@
 _host: raspi-ext
 _email: zleblanc@redhat.com
 _domains:
-  - name: cop.code.autodotes.com
-    private_ip: 192.168.0.16
+  - name: docs.autodotes.com
