@@ -1,0 +1,61 @@
+---
+- name: Example playbook using a SQL Query
+  hosts: fedora
+  become: false
+  gather_facts: false
+
+  vars:
+    report_server: raspi
+    report_dir: /var/www/reports.autodotes.com/roles
+
+  tasks:
+    - name: Check DB connection
+      community.general.mssql_script:
+        login_user: "{{ mssql_login_user }}"
+        login_password: "{{ mssql_login_password }}"
+        login_host: "{{ mssql_host }}"
+        login_port: "{{ mssql_port }}"
+        db: master
+        script: "SELECT 1"
+
+    - name: Query ansible packages
+      register: r_select_all
+      community.general.mssql_script:
+        login_user: "{{ mssql_login_user }}"
+        login_password: "{{ mssql_login_password }}"
+        login_host: "{{ mssql_host }}"
+        login_port: "{{ mssql_port }}"
+        db: demo
+        script: "SELECT * from ballparks"
+        output: dict
+
+    - name: Save raw results
+      ansible.builtin.set_fact:
+        raw_data: "{{ r_select_all | json_query('query_results_dict[][]') }}"
+
+    - name: Generate tabular report
+      ansible.builtin.include_role:
+        name: table
+      vars:
+        table_title: MLB Ballparks
+        table_data: "{{ raw_data }}"
+        table_output_remote_host: "{{ report_server }}"
+        table_output_dest: "{{ report_dir }}/mlb-table.html"
+
+    # - name: Print team + park
+    #   ansible.builtin.debug:
+    #     msg: "{{ r_select_all | json_query('query_results_dict[][].{team: team_name, park: ballpark}') }}"
+
+    # - name: Query ansible packages
+    #   register: r_min_cf
+    #   community.general.mssql_script:
+    #     login_user: "{{ mssql_login_user }}"
+    #     login_password: "{{ mssql_login_password }}"
+    #     login_host: "{{ mssql_host }}"
+    #     login_port: "{{ mssql_port }}"
+    #     db: demo
+    #     script: "SELECT * from ballparks where center_field > %(min_cf)d"
+    #     output: dict
+    #     params:
+    #       min_cf: 400
+...
