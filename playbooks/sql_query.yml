@@ -35,7 +35,7 @@
 
     - name: Generate tabular report
       ansible.builtin.include_role:
-        name: table
+        name: zjleblanc.reporting.table
       vars:
         table_title: MLB Ballparks
         table_data: "{{ raw_data }}"

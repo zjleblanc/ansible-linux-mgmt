@@ -7,5 +7,6 @@ ansible.cfg
 execution-environments/**/context/
 demos/local_vars/
 
+.DS_Store
 *.log
 **/.yamllint
