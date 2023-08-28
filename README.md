@@ -10,6 +10,7 @@ Ansible repository for content used to manage Linux servers
 | postgres.yml | [📕](./playbooks/postgres.yml) | [📝](./playbooks/docs/postgres.md) |
 | python_script.yml | [📕](./playbooks/python_script.yml) | [📝](./playbooks/docs/python_script.md) |
 | configure_nginx_site_ssl.yml | [📕](./playbooks/configure_nginx_site_ssl.yml) | [📝](./playbooks/docs/configure_nginx_site_ssl.md) |
+| sql_query.yml | [📕](./playbooks/sql_query.yml) | [📝](./playbooks/docs/sql_query.md) |
 
 ## Roles
 
