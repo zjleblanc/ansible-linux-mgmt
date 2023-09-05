@@ -1,0 +1,15 @@
+---
+- name: Gather facts for always on hosts and generate report
+  hosts: always_on
+  gather_facts: true
+
+  tasks:
+    - name: Facts role # noqa run-once[task]
+      run_once: true
+      ansible.builtin.include_role:
+        name: zjleblanc.reporting.facts
+      vars:
+        facts_table_title: "Inventory Facts Report"
+        facts_table_limit_prefix: ansible_
+        facts_table_output_remote_host: "{{ report_server }}"
+        facts_table_output_dest: "{{ report_dir }}/facts.lab.html"

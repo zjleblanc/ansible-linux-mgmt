@@ -40,7 +40,7 @@
         table_title: MLB Ballparks
         table_data: "{{ raw_data }}"
         table_output_remote_host: "{{ report_server }}"
-        table_output_dest: "{{ report_dir }}/mlb-table.html"
+        table_output_dest: "{{ report_dir }}/table.mlb.html"
 
     # - name: Print team + park
     #   ansible.builtin.debug:

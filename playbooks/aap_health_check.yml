@@ -1,0 +1,37 @@
+- name: Check health of controllers and corresponding automation hub instances
+  hosts: controllers
+  become: false
+  gather_facts: false
+
+  tasks:
+    - name: Create a new token using username/password
+      ansible.controller.token:
+        scope: "write"
+        state: present
+        controller_host: "{{ controller_fqdn }}"
+        controller_username: "{{ controller_username }}"
+        controller_password: "{{ controller_password }}"
+
+    - name: Controller Ping
+      delegate_to: localhost
+      register: r_controller_ping
+      ansible.builtin.uri:
+        url: https://{{ controller_fqdn }}/api/v2/ping
+        method: GET
+        headers:
+          Authorization: "Bearer: {{ controller_token.token }}"
+
+    - name: Print ping results
+      ansible.builtin.debug:
+        msg: "{{ r_controller_ping.json }}"
+
+    - name: Login to automation hub registry
+      register: r_ah_login
+      containers.podman.podman_login:
+        username: "{{ pah_username }}"
+        password: "{{ pah_password }}"
+        registry: "{{ pah_fqdn }}"
+
+    - name: Print login results
+      ansible.builtin.debug:
+        msg: "{{ r_ah_login }}"
