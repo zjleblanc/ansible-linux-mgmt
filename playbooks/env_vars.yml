@@ -1,10 +1,18 @@
 ---
 - name: Inspect environment
-  hosts: localhost
+  hosts: "{{ hosts | default('localhost') }}"
   gather_facts: false
+
+  vars:
+    env_vars:
+      - ANSIBLE_CALLBACK_PLUGINS
 
   tasks:
     - name: Debug environment variables
       loop: "{{ env_vars }}"
       ansible.builtin.debug:
         msg: "{{ lookup('env', item) }}"
+
+    - name: List callback plugins
+      ansible.builtin.find:
+        paths: "{{ lookup('env', 'ANSIBLE_CALLBACK_PLUGINS') }}"
