@@ -1,14 +1,9 @@
 ---
 - name: Sleep and wait to debug job mechanics
   hosts: localhost
-  gather_facts: true
+  gather_facts: false
 
   tasks:
-    - name: Debug ansible facts
-      ansible.builtin.debug:
-        var: ansible_facts
-
     - name: Debug hostvars
       ansible.builtin.pause:
         minutes: "{{ pause_minutes }}"
-

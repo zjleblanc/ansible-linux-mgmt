@@ -1,0 +1,10 @@
+---
+- name: Inspect environment
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Debug environment variables
+      loop: "{{ env_vars }}"
+      ansible.builtin.debug:
+        msg: "{{ lookup('env', item) }}"
