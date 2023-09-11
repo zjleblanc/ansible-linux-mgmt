@@ -1,7 +1,7 @@
 ---
 - name: Inspect environment
   hosts: "{{ _hosts | default('localhost') }}"
-  gather_facts: false
+  gather_facts: true
 
   vars:
     env_vars:
