@@ -14,5 +14,11 @@
         msg: "{{ lookup('env', item) }}"
 
     - name: List callback plugins
+      when: not ansible_system|lower == 'windows'
       ansible.builtin.find:
+        paths: "{{ lookup('env', 'ANSIBLE_CALLBACK_PLUGINS') }}"
+
+    - name: List callback plugins
+      when: ansible_system|lower == 'windows'
+      ansible.builtin.win_find:
         paths: "{{ lookup('env', 'ANSIBLE_CALLBACK_PLUGINS') }}"
