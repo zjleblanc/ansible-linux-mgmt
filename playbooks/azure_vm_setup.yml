@@ -34,9 +34,10 @@
         dest: "/home/ansible/katello-ca-consumer-latest.noarch.rpm"
         validate_certs: false
 
-    - name: Install pre-built bootstrap RPM # noqa no-changed-when command-instead-of-module
-      ansible.builtin.yum:
+    - name: Install pre-built bootstrap RPM
+      ansible.builtin.dnf:
         name: /home/ansible/katello-ca-consumer-latest.noarch.rpm
+        disable_gpg_check: true
         state: present
 
     - name: Add katello facts # noqa risky-file-permissions
@@ -63,7 +64,7 @@
         name: satellite-tools-6.10-for-rhel-8-x86_64-rpms
 
     - name: Install katello packages # noqa package-latest
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name:
           - katello-host-tools
           - katello-host-tools-tracer
