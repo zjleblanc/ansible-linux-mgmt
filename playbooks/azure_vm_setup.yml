@@ -11,7 +11,6 @@
 
   tasks:
     - name: Set MOTD
-      delegate_to: localhost
       ansible.builtin.copy:
         content: "Ansible callback provisioning succeeded for {{ inventory_hostname }}"
         dest: /etc/motd
@@ -66,7 +65,7 @@
         - cert.pem
         - key.pem
       ansible.builtin.copy:
-        src: "/tmp/{{ item }}"
+        src: "/tmp/{{ inventory_hostname }}/etc/pki/consumer/{{ item }}"
         dest: "/etc/pki/consumer/{{ item }}"
         mode: "0640"
         owner: root
