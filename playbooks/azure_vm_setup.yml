@@ -28,9 +28,11 @@
     - name: Set hostname to FQDN # noqa no-changed-when
       ansible.builtin.command: "hostnamectl set-hostname {{ inventory_hostname }}"
 
-    - name: Download pre-built bootstrap RPM # noqa no-changed-when command-instead-of-module
-      ansible.builtin.command: |
-        curl --insecure --output /home/ansible/katello-ca-consumer-latest.noarch.rpm {{ satellite_host }}/pub/katello-ca-consumer-latest.noarch.rpm
+    - name: Download pre-built bootstrap RPM # noqa risky-file-permissions
+      ansible.builtin.get_url:
+        url: "{{ satellite_host }}/pub/katello-ca-consumer-latest.noarch.rpm"
+        dest: "/home/ansible/katello-ca-consumer-latest.noarch.rpm"
+        validate_certs: false
 
     - name: Install pre-built bootstrap RPM # noqa no-changed-when command-instead-of-module
       ansible.builtin.yum:
