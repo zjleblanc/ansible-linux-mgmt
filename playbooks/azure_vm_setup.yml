@@ -59,7 +59,7 @@
         - key.pem
       ansible.builtin.fetch:
         src: "/etc/pki/consumer/{{ item }}"
-        dest: "/tmp/{{ item }}"
+        dest: "/tmp"
 
     - name: Add consumer cert
       loop:
