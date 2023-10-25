@@ -6,7 +6,7 @@
 
   vars:
     satellite_host: https://satellite.autodotes.com
-    satellite_org: Autodotes
+    satellite_org: 1
     satellite_activation_key: "ansible-demo-key"
 
   tasks:
@@ -33,7 +33,9 @@
         curl --insecure --output /home/ansible/katello-ca-consumer-latest.noarch.rpm {{ satellite_host }}/pub/katello-ca-consumer-latest.noarch.rpm
 
     - name: Install pre-built bootstrap RPM # noqa no-changed-when command-instead-of-module
-      ansible.builtin.command: yum -y localinstall /home/ansible/katello-ca-consumer-latest.noarch.rpm
+      ansible.builtin.yum:
+        name: /home/ansible/katello-ca-consumer-latest.noarch.rpm
+        state: present
 
     - name: Add katello facts # noqa risky-file-permissions
       ansible.builtin.copy:
@@ -47,13 +49,16 @@
     - name: Reboot to apply crypto policy changes
       ansible.builtin.reboot:
 
-    - name: Register with Satellite # noqa no-changed-when
-      ansible.builtin.command: |
-        subscription-manager register --force --org="{{ satellite_org }}" --activationkey="{{ satellite_activation_key }}"
+    - name: Register with Satellite
+      community.general.redhat_subscription:
+        org_id: "{{ satellite_org }}"
+        activationkey: "{{ satellite_activation_key }}"
+        force_register: true
+        state: present
 
-    - name: Install satellite tools # noqa no-changed-when
-      ansible.builtin.command: |
-        subscription-manager repos --enable=satellite-tools-6.10-for-rhel-8-x86_64-rpms
+    - name: Enable satellite tools repo
+      community.general.rhsm_repository:
+        name: satellite-tools-6.10-for-rhel-8-x86_64-rpms
 
     - name: Install katello packages # noqa package-latest
       ansible.builtin.yum:
