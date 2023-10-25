@@ -44,25 +44,3 @@
         content: '{"network.fqdn":"{{ inventory_hostname }}"}'
         dest: /etc/rhsm/facts/katello.facts
 
-    # - name: Update crypto policy # noqa no-changed-when
-    #   ansible.builtin.command: |
-    #     update-crypto-policies --set DEFAULT
-
-    # - name: Reboot to apply crypto policy changes
-    #   ansible.builtin.reboot:
-
-    # - name: Register with Satellite # noqa no-changed-when
-    #   ansible.builtin.command: >
-    #     subscription-manager register --force --org="{{ satellite_org }}" --activationkey="{{ satellite_activation_key }}"
-
-    - name: Enable satellite tools repo
-      community.general.rhsm_repository:
-        name: satellite-tools-6.10-for-rhel-8-x86_64-rpms
-
-    - name: Install katello packages # noqa package-latest
-      ansible.builtin.dnf:
-        name:
-          - katello-host-tools
-          - katello-host-tools-tracer
-          - katello-agent
-        state: latest
