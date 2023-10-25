@@ -44,6 +44,9 @@
       ansible.builtin.command: |
         update-crypto-policies --set DEFAULT
 
+    - name: Reboot to apply crypto policy changes
+      ansible.builtin.reboot:
+
     - name: Register with Satellite # noqa no-changed-when
       ansible.builtin.command: |
         subscription-manager register --force --org="{{ satellite_org }}" --activationkey="{{ satellite_activation_key }}"
