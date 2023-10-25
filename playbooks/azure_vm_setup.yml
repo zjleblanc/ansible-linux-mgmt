@@ -52,14 +52,25 @@
     - name: Reboot to apply crypto policy changes
       ansible.builtin.reboot:
 
-    - name: Add consumer cert
+    - name: Fetch consumer certs
       delegate_to: satellite.autodotes.com
       loop:
         - cert.pem
         - key.pem
-      ansible.posix.synchronize:
+      ansible.builtin.fetch:
         src: "/etc/pki/consumer/{{ item }}"
+        dest: "/tmp/{{ item }}"
+
+    - name: Add consumer cert
+      loop:
+        - cert.pem
+        - key.pem
+      ansible.builtin.copy:
+        src: "/tmp/{{ item }}"
         dest: "/etc/pki/consumer/{{ item }}"
+        mode: "0640"
+        owner: root
+        group: root
 
     - name: Register with Satellite # noqa no-changed-when
       ansible.builtin.command: >
