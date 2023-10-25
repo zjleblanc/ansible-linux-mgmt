@@ -6,7 +6,7 @@
 
   vars:
     satellite_host: https://satellite.autodotes.com
-    satellite_org: 1
+    satellite_org: Autodotes
     satellite_activation_key: "ansible-demo-key"
 
   tasks:
@@ -52,12 +52,9 @@
     - name: Reboot to apply crypto policy changes
       ansible.builtin.reboot:
 
-    - name: Register with Satellite
-      community.general.redhat_subscription:
-        org_id: "{{ satellite_org }}"
-        activationkey: "{{ satellite_activation_key }}"
-        force_register: true
-        state: present
+    - name: Register with Satellite # noqa no-changed-when
+      ansible.builtin.command: |
+        subscription-manager register --force --org="{{ satellite_org }}" --activationkey="{{ satellite_activation_key }}"
 
     - name: Enable satellite tools repo
       community.general.rhsm_repository:
