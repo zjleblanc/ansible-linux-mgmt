@@ -33,7 +33,7 @@
   changed_when: "'imported' in r_qm_importdisk.stdout_lines[-1]"
   failed_when: "'Success' not in r_qm_importdisk.stdout_lines[-1]"
   ansible.builtin.command:
-    cmd: "qm importdisk {{ r_proxmox_guest.vmid }} {{ pve_config.kvm }} local-lvm"
+    cmd: qm importdisk {{ r_proxmox_guest.vmid }} {{ pve_config.kvm }} local-lvm
     chdir: /var/lib/vz/template/qemu
 
 - name: Print stdout for importdisk
@@ -42,21 +42,21 @@
 
 - name: Add disk
   ansible.builtin.uri:
-    url: "https://{{ proxmox_api_host }}:8006/api2/extjs/nodes/pve/qemu/{{ r_proxmox_guest.vmid }}/config"
+    url: https://{{ proxmox_api_host }}:8006/api2/extjs/nodes/pve/qemu/{{ r_proxmox_guest.vmid }}/config
     method: post
     headers:
-      Authorization: "PVEAPIToken={{ proxmox_api_user }}!{{ proxmox_api_token_id }}={{ proxmox_api_token_secret }}"
+      Authorization: PVEAPIToken={{ proxmox_api_user }}!{{ proxmox_api_token_id }}={{ proxmox_api_token_secret }}
     body:
-      virtio1: "local-lvm:vm-{{ r_proxmox_guest.vmid }}-disk-0,iothread=on"
+      virtio1: local-lvm:vm-{{ r_proxmox_guest.vmid }}-disk-0,iothread=on
       background_delay: 5
     body_format: form-urlencoded
 
 - name: Set boot order
   ansible.builtin.uri:
-    url: "https://{{ proxmox_api_host }}:8006/api2/extjs/nodes/pve/qemu/{{ r_proxmox_guest.vmid }}/config"
+    url: https://{{ proxmox_api_host }}:8006/api2/extjs/nodes/pve/qemu/{{ r_proxmox_guest.vmid }}/config
     method: post
     headers:
-      Authorization: "PVEAPIToken={{ proxmox_api_user }}!{{ proxmox_api_token_id }}={{ proxmox_api_token_secret }}"
+      Authorization: PVEAPIToken={{ proxmox_api_user }}!{{ proxmox_api_token_id }}={{ proxmox_api_token_secret }}
     body:
       boot: order=virtio1;virtio0;ide2;net0
     body_format: form-urlencoded

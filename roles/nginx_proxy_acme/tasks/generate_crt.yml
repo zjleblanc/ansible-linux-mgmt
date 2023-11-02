@@ -38,7 +38,7 @@
 - name: Implement http-01 challenge files
   ansible.builtin.copy:
     content: "{{ r_acme_challenge['challenge_data'][acme_domain_name]['http-01']['resource_value'] }}"
-    dest: "/var/www/html/{{ r_acme_challenge['challenge_data'][acme_domain_name]['http-01']['resource'] }}"
+    dest: /var/www/html/{{ r_acme_challenge['challenge_data'][acme_domain_name]['http-01']['resource'] }}
     owner: root
     group: root
     mode: u=rw,g=r,o=r
@@ -61,7 +61,7 @@
   notify: Restart nginx
   ansible.builtin.template:
     src: site-ssl.conf.j2
-    dest: "/etc/nginx/sites-available/{{ acme_domain_name }}.conf"
+    dest: /etc/nginx/sites-available/{{ acme_domain_name }}.conf
     owner: root
     group: root
-    mode: '0664'
+    mode: "0664"

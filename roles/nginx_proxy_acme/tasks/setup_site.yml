@@ -17,22 +17,22 @@
         dest: "{{ acme_site_root }}/index.html"
         owner: root
         group: root
-        mode: '0664'
+        mode: "0664"
 
 - name: Template nginx site conf
   notify: Reload nginx
   ansible.builtin.template:
     src: site-http.conf.j2
-    dest: "/etc/nginx/sites-available/{{ acme_domain_name }}.conf"
+    dest: /etc/nginx/sites-available/{{ acme_domain_name }}.conf
     owner: root
     group: root
-    mode: '0664'
+    mode: "0664"
 
 - name: Create sites-enabled symlink
   notify: Reload nginx
   ansible.builtin.file:
-    src: "/etc/nginx/sites-available/{{ acme_domain_name }}.conf"
-    dest: "/etc/nginx/sites-enabled/{{ acme_domain_name }}.conf"
+    src: /etc/nginx/sites-available/{{ acme_domain_name }}.conf
+    dest: /etc/nginx/sites-enabled/{{ acme_domain_name }}.conf
     owner: root
     group: root
     state: link

@@ -7,7 +7,7 @@
   vars:
     supervisor_exec_vars_only: false
     uwsgi_listen_queue_size: 4096
-    uwsgi_bash: "bash -c"
+    uwsgi_bash: bash -c
 
   handlers:
     - name: Restart supervisor
@@ -20,12 +20,12 @@
         - Start supervisor.
     - name: Stop supervisor.
       ansible.builtin.service:
-        name: 'supervisord'
+        name: supervisord
         state: stopped
 
     - name: Wait for supervisor to stop.
       ansible.builtin.stat:
-        path: '/var/run/supervisor/supervisor.sock'
+        path: /var/run/supervisor/supervisor.sock
       register: result
       until: not result.stat.exists
       retries: 10
@@ -33,7 +33,7 @@
 
     - name: Start supervisor.
       ansible.builtin.service:
-        name: 'supervisord'
+        name: supervisord
         state: started
 
   tasks:
@@ -63,8 +63,8 @@
 
     - name: Install supervisor config # noqa: risky-file-permissions
       ansible.builtin.template:
-        src: 'tower.conf.j2'
-        dest: '/etc/supervisord.d/tower.ini'
+        src: tower.conf.j2
+        dest: /etc/supervisord.d/tower.ini
         force: true
       notify:
         - restart supervisor
@@ -75,7 +75,7 @@
         dest: /etc/logrotate.d/supervisor
         owner: root
         group: root
-        mode: '0644'
+        mode: "0644"
 
     # This is necessary due to an error where awx did not have permission to read
     # /var/run/supervisor. Telling systemd to recreate its tmp files fixes this.
@@ -84,11 +84,11 @@
 
     - name: Start/enable supervisord process
       ansible.builtin.service:
-        name: 'supervisord'
+        name: supervisord
         state: started
         enabled: true
 
     - name: Wait for the supervisor socket
       ansible.builtin.wait_for:
-        path: '/var/run/supervisor/supervisor.sock'
+        path: /var/run/supervisor/supervisor.sock
         timeout: 30
