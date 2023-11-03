@@ -14,4 +14,4 @@
 
     - name: Print out the Distribution
       ansible.builtin.debug:
-        msg: "I am a {{ ansible_facts.distribution | default('¯\_(ツ)_/¯') }} machine."
+        msg: I am a {{ ansible_facts.distribution | default('¯ (ツ)_/¯') }} machine.

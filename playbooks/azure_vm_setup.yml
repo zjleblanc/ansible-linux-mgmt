@@ -7,12 +7,12 @@
   vars:
     satellite_host: https://satellite.autodotes.com
     satellite_org: Autodotes
-    satellite_activation_key: "ansible-demo-key"
+    satellite_activation_key: ansible-demo-key
 
   tasks:
     - name: Set MOTD
       ansible.builtin.copy:
-        content: "Ansible callback provisioning succeeded for {{ inventory_hostname }}"
+        content: Ansible callback provisioning succeeded for {{ inventory_hostname }}
         dest: /etc/motd
         mode: "0644"
         owner: root
@@ -21,16 +21,16 @@
     - name: Set hostname as FQDN
       ansible.builtin.lineinfile:
         path: /etc/hosts
-        regexp: '^127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 localhost4 localhost4.localdomain4'
-        line: "127.0.0.1   {{ inventory_hostname }} localhost"
+        regexp: ^127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 localhost4 localhost4.localdomain4
+        line: 127.0.0.1   {{ inventory_hostname }} localhost
 
     - name: Set hostname to FQDN # noqa no-changed-when
-      ansible.builtin.command: "hostnamectl set-hostname {{ inventory_hostname }}"
+      ansible.builtin.command: hostnamectl set-hostname {{ inventory_hostname }}
 
     - name: Download pre-built bootstrap RPM # noqa risky-file-permissions
       ansible.builtin.get_url:
         url: "{{ satellite_host }}/pub/katello-ca-consumer-latest.noarch.rpm"
-        dest: "/home/ansible/katello-ca-consumer-latest.noarch.rpm"
+        dest: /home/ansible/katello-ca-consumer-latest.noarch.rpm
         validate_certs: false
 
     - name: Install pre-built bootstrap RPM
@@ -43,4 +43,3 @@
       ansible.builtin.copy:
         content: '{"network.fqdn":"{{ inventory_hostname }}"}'
         dest: /etc/rhsm/facts/katello.facts
-

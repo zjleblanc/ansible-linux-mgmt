@@ -5,7 +5,7 @@
   become: true
 
   tasks:
-    - name: Create site with ssl            # noqa: var-naming[no-role-prefix]
+    - name: Create site with ssl # noqa: var-naming[no-role-prefix]
       when: _domains is not defined
       ansible.builtin.include_role:
         name: nginx_proxy_acme
@@ -13,7 +13,7 @@
         acme_domain_name: "{{ _domain }}"
         acme_email: "{{ _email }}"
 
-    - name: Create site(s) with ssl         # noqa: var-naming[no-role-prefix]
+    - name: Create site(s) with ssl # noqa: var-naming[no-role-prefix]
       when: _domains is defined
       loop: "{{ _domains }}"
       loop_control:

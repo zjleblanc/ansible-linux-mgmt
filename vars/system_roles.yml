@@ -30,7 +30,7 @@ network_connections:
   - name: enp7s0
     interface_name: enp7s0
     type: ethernet
-    autoconnect: yes
+    autoconnect: true
     ip:
       address:
         - 192.0.2.1/24
@@ -45,7 +45,7 @@ network_connections:
     state: up
 
 firewall:
-    # Forward incoming traffic on port 8080 to 443
+  # Forward incoming traffic on port 8080 to 443
   - service: cockpit
     state: enabled
   - forward_port: 8080/tcp;443;
@@ -59,12 +59,12 @@ firewall:
     runtime: true
     permanent: true
     # Create a DMZ with access to HTTPs port
-  # - zone: dmz
-  #   interface: enp1s0
-  #   service: https
-  #   state: enabled
-  #   runtime: true
-  #   permanent: true
+# - zone: dmz
+#   interface: enp1s0
+#   service: https
+#   state: enabled
+#   runtime: true
+#   permanent: true
 
 # logging
 logging_inputs:
@@ -80,12 +80,12 @@ logging_flows:
 
 sshd:
   # root login and password login is enabled only from a particular subnet
-  PermitRootLogin: no
-  PasswordAuthentication: no
+  PermitRootLogin: false
+  PasswordAuthentication: false
   Match:
-  - Condition: "Address 192.0.2.0/24"
-    PermitRootLogin: yes
-    PasswordAuthentication: yes
+    - Condition: Address 192.0.2.0/24
+      PermitRootLogin: true
+      PasswordAuthentication: true
 
 # cockpit
 cockpit_packages: default

@@ -11,7 +11,7 @@
           - proxmox_api_user is defined
           - proxmox_api_token_id is defined
           - proxmox_api_token_secret is defined
-        fail_msg: "Missing one of the required proxmox authentication variables - promox_api_[host|user|token_id|token_secret]"
+        fail_msg: Missing one of the required proxmox authentication variables - promox_api_[host|user|token_id|token_secret]
 
     - name: Build VMs via defined configs
       when: proxmox_vm_configs is defined

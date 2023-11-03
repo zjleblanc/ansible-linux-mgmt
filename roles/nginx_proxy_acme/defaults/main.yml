@@ -14,4 +14,4 @@ acme_required_dirs:
   - "{{ acme_letsencrypt_certs_dir }}"
 
 acme_valid_days: "30" # if expiring in <= acme_valid_days, generate new cert
-acme_site_root: "/var/www/html/{{ acme_domain_name }}" # directory for site root if proxy not used
+acme_site_root: /var/www/html/{{ acme_domain_name }} # directory for site root if proxy not used

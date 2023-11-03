@@ -1,3 +1,4 @@
+---
 - name: Check health of controllers and corresponding automation hub instances
   hosts: controllers
   become: false
@@ -6,7 +7,7 @@
   tasks:
     - name: Create a new token using username/password
       ansible.controller.token:
-        scope: "write"
+        scope: write
         state: present
         controller_host: "{{ controller_fqdn }}"
         controller_username: "{{ controller_username }}"
