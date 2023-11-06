@@ -24,4 +24,5 @@ Ansible repository for content used to manage Linux servers
 | --- | :---: | :---: |
 | Register RHEL machine using subscription-manager | [📋](./demos/rhsm.yml) | [📝](./demos/docs/rhsm.md) |
 | Install SQL Server on RHEL | [📋](./demos/sqlserver-rhel.yml) | [📝](./demos/docs/sqlserver-rhel.md) |
+| Join RHEL machine to Active Directory Domain | [📋](./demos/join_ad_domain.yml) | [📝](./demos/docs/join-ad-domain.md) |
 | Build Containers from template<br>Simulate building out multiple Containers with configurable options | [📋](./demos/proxmox_container_build.yml) | |

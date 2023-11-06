@@ -1,0 +1,64 @@
+---
+- name: Join Red Hat Linux server to AD domain
+  hosts: adlinux
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Install required packages
+      ansible.builtin.package:
+        name:
+          - adcli
+          - krb5-workstation
+          - oddjob
+          - oddjob-mkhomedir
+          - openldap-clients
+          - policycoreutils-python
+          - realmd
+          - samba-common
+          - samba-common-tools
+          - sssd
+          - sssd-tools
+        state: present
+
+    - name: Join the AD domain # noqa risky-shell-pipe no-changed-when
+      tags: join
+      register: join_result
+      ignore_errors: true
+      ansible.builtin.shell: echo "{{ ad_password }}" | realm join --user={{ ad_user }} {{ ad_domain }}
+
+    - name: Check the AD join result
+      when: join_result.rc
+      tags: join
+      ansible.builtin.fail:
+        msg: "Unable to join the AD domain, {{ join_result.stderr }}"
+
+    - name: Restart SSSD service
+      tags: join
+      ansible.builtin.service:
+        name: sssd
+        state: restarted
+        enabled: true
+
+    - name: Check the realm config # noqa no-changed-when
+      tags: status
+      register: r_config_check
+      ansible.builtin.command: sssctl config-check
+
+    - name: Check the domain status # noqa risky-shell-pipe no-changed-when
+      tags: status
+      register: r_domain_status
+      ansible.builtin.shell: "sssctl domain-status {{ ad_domain }} | grep '\\S'"
+
+    - name: Parse domain details
+      tags: status
+      ansible.builtin.set_fact:
+        status:
+          online: "{{ r_domain_status.stdout_lines[0].split(' ')[-1] }}"
+          domain_controller: "{{ r_domain_status.stdout_lines[3].split(' ')[-1] }}"
+          global_catalog_servers: "{{ r_domain_status.stdout_lines[5] }}"
+
+    - name: Debug domain details
+      tags: status
+      ansible.builtin.debug:
+        var: status
