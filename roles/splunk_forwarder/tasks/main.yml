@@ -1,0 +1,92 @@
+---
+- name: Create Splunk group
+  ansible.builtin.group:
+    name: "{{ splunk_forwarder_group }}"
+    gid: "{{ splunk_forwarder_gid }}"
+    state: present
+  tags: splunk_user
+
+- name: Create Splunk user
+  ansible.builtin.user:
+    name: "{{ splunk_forwarder_user }}"
+    group: "{{ splunk_forwarder_group }}"
+    uid: "{{ splunk_forwarder_uid }}"
+    state: present
+  tags: splunk_user
+
+- name: Download the Splunk package (Enterprise Linux)
+  ansible.builtin.get_url:
+    url: "{{ splunk_rpm }}"
+    dest: "/tmp/{{ splunk_forwarder_rpm }}"
+    checksum: "{{ splunk_rpm_checksum }}"
+    mode: 0664
+
+- name: Install Splunk (python2 yum)
+  ansible.builtin.yum:
+    name: "/tmp/{{ splunk_forwarder_rpm }}"
+    state: present
+  when: ansible_facts.python.version.major | int < 3
+
+- name: Install Splunk (python3 dnf)
+  ansible.builtin.dnf:
+    name: "/tmp/{{ splunk_forwarder_rpm }}"
+    disable_gpg_check: true
+    state: present
+  when: ansible_facts.python.version.major | int >= 3
+
+- name: Copy user seeds file
+  when: 
+    - splunk_forwarder_admin_user is defined
+    - splunk_forwarder_admin_pass is defined
+  ansible.builtin.template:
+    src: user-seed.conf.j2
+    dest: /opt/splunkforwarder/etc/system/local/user-seed.conf
+    mode: 0664
+    backup: true
+  tags: config_copy
+
+- name: Copy deploymentclient file
+  when: splunk_forwarder_depl_server is defined
+  ansible.builtin.template:
+    src: deploymentclient.conf.j2
+    dest: /opt/splunkforwarder/etc/system/local/deploymentclient.conf
+    mode: 0664
+    backup: true
+  tags: config_copy
+
+- name: Copy inputs file
+  ansible.builtin.template:
+    src: inputs.conf.j2
+    dest: /opt/splunkforwarder/etc/system/local/inputs.conf
+    mode: 0664
+    backup: true
+  tags: config_copy
+
+- name: Copy outputs file
+  ansible.builtin.template:
+    src: outputs.conf.j2
+    dest: /opt/splunkforwarder/etc/system/local/outputs.conf
+    mode: 0664
+    backup: true
+  tags: config_copy
+
+- name: Set logfile permissions
+  become: true
+  loop: "{{ splunk_forwarder_logs }}"
+  ansible.posix.acl:
+    path: "{{ item }}"
+    entity: "{{ splunk_forwarder_user }}"
+    state: present
+    etype: user
+    permissions: r
+    recursive: true
+
+- name: Upload Splunk Systemd Script
+  when: ansible_service_mgr == 'systemd'
+  ansible.builtin.template:
+    src: splunkd.service.j2
+    dest: /etc/systemd/system/splunkd.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: Enable Splunk Forwarder

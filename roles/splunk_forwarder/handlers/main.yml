@@ -1,0 +1,6 @@
+---
+- name: Enable Splunk Forwarder
+  ansible.builtin.service:
+    name: splunkd
+    enabled: true
+    state: started

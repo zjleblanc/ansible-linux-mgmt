@@ -1,0 +1,33 @@
+---
+- name: Install Agent (Splunk Forwarder) on RHEL
+  hosts: rhel8
+  become: true
+
+  vars:
+    splunk_forwarder_admin_user: zach
+    splunk_forwarder_admin_pass: redhat
+    splunk_forwarder_depl_server: splunk-mgt:8089
+    splunk_forwarder_indexer: splunk-indexer:9997
+    splunk_forwarder_index: default
+    splunk_forwarder_sourcetype: nginx
+    splunk_forwarder_logs:
+      - /var/log/nginx/access.log
+      - /var/log/nginx/error.log
+
+  tasks:
+
+    - name: Stage nginx log dir # noqa risky-file-permissions
+      ansible.builtin.file:
+        name: "/var/log/nginx"
+        state: directory
+
+    - name: Stage log files
+      loop: "{{ splunk_forwarder_logs }}"
+      ansible.builtin.copy:
+        content: ""
+        dest: "{{ item }}"
+        mode: "0755"
+
+    - name: Install Splunk Forwarder
+      ansible.builtin.include_role:
+        name: splunk_forwarder
