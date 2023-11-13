@@ -15,10 +15,9 @@
       - /var/log/nginx/error.log
 
   tasks:
-
     - name: Stage nginx log dir # noqa risky-file-permissions
       ansible.builtin.file:
-        name: "/var/log/nginx"
+        name: /var/log/nginx
         state: directory
 
     - name: Stage log files
