@@ -10,3 +10,5 @@ demos/local_vars/
 .DS_Store
 *.log
 **/.yamllint
+
+**/__pycache__
