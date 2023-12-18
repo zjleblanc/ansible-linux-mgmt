@@ -1,0 +1,65 @@
+---
+- name: Stage package updates and install from cache
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: false
+  become: true
+
+  # See docs for more configuration options
+  # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/dnf_module.html
+  # vars:
+  #   security_only:  # only installs updates that have been marked security related
+  #   bugfix_only:    # only installs updates that have been marked bugfix related
+
+  tasks:
+    # Note that check mode cannot be used with async tasks
+    - name: Download installed package updates
+      async: 600    # run for 10 minutes
+      poll: 0       # continue playbook execution
+      register: r_download_updates
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+        update_cache: true
+        download_only: true
+        security: "{{ security_only | default(false) }}"
+        bugfix: "{{ bugfix_only | default(false) }}"
+
+    - name: Wait for async downloads [optional]
+      register: job_result
+      until: job_result.finished
+      retries: 100
+      delay: 10
+      ansible.builtin.async_status:
+        jid: "{{ r_download_updates.ansible_job_id }}"
+
+- name: Install package updates from cache
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: false
+  become: true
+
+  # vars:
+  #   security_only:  # only installs updates that have been marked security related
+  #   bugfix_only:    # only installs updates that have been marked bugfix related
+
+  tasks:
+    - name: Gather package facts [before]
+      register: r_pkgs_before
+      ansible.builtin.package_facts:
+
+    - name: Install package updates from cache
+      register: r_install_updates
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+        cacheonly: true
+        security: "{{ security_only | default(false) }}"
+        bugfix: "{{ bugfix_only | default(false) }}"
+
+    - name: Gather package facts [after]
+      register: r_pkgs_after
+      ansible.builtin.package_facts:
+
+    - name: Identify package changes
+      ansible.utils.fact_diff:
+        before: "{{ r_pkgs_before.ansible_facts.packages }}"
+        after: "{{ r_pkgs_after.ansible_facts.packages }}"
