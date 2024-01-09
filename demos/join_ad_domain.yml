@@ -31,7 +31,7 @@
       when: join_result.rc
       tags: join
       ansible.builtin.fail:
-        msg: "Unable to join the AD domain, {{ join_result.stderr }}"
+        msg: Unable to join the AD domain, {{ join_result.stderr }}
 
     - name: Restart SSSD service
       tags: join
@@ -48,7 +48,7 @@
     - name: Check the domain status # noqa risky-shell-pipe no-changed-when
       tags: status
       register: r_domain_status
-      ansible.builtin.shell: "sssctl domain-status {{ ad_domain }} | grep '\\S'"
+      ansible.builtin.shell: sssctl domain-status {{ ad_domain }} | grep '\S'
 
     - name: Parse domain details
       tags: status
