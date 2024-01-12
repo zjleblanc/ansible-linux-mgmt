@@ -1,17 +1,26 @@
 ---
 - name: Basic fact gathering playbook
-  hosts: all
-  gather_facts: true
+  hosts: fedora
+  gather_facts: false
+
+  vars_files:
+    - vars/demo.yml
 
   tasks:
-    - name: Debug ansible facts
-      ansible.builtin.debug:
-        var: ansible_facts
+    - name: Gather ansible facts
+      become_user: zach
+      ansible.builtin.setup:
+      vars:
+        ansible_remote_tmp: /home/zach/.tmp/
 
-    - name: Debug hostvars
-      ansible.builtin.debug:
-        msg: "{{ hostvars[inventory_hostname] }}"
+    # - name: Debug hostvars
+    #   ansible.builtin.debug:
+    #     msg: "{{ hostvars[inventory_hostname] }}"
 
     - name: Print out the Distribution
       ansible.builtin.debug:
         msg: I am a {{ ansible_facts.distribution | default('¯ (ツ)_/¯') }} machine.
+
+    - name: Debug special
+      ansible.builtin.debug:
+        msg: "{{ special }}"

@@ -1,0 +1,7 @@
+---
+- name: Test NOV legacy EE
+  hosts: localhost
+
+  tasks:
+    - name: dummy task using module I expect to be there
+      hashivault_read:
