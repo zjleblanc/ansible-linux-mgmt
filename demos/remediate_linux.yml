@@ -5,6 +5,9 @@
 
   vars:
     site_root: /usr/share/nginx/demo
+    site_tar_url: https://artifacts.autodotes.com/demo-site.tar.gz
+    systemd_nginx_path_unit_name: demosite
+    systemd_nginx_service_name: deploydemosite
 
   tasks:
     # Avoid an event loop when restoring site from tar
@@ -20,7 +23,7 @@
         
     - name: Unarchive a file that needs to be downloaded (added in 2.0)
       ansible.builtin.unarchive:
-        src: https://artifacts.autodotes.com/demo-site.tar.gz
+        src: "{{ site_tar_url }}"
         dest: "{{ site_root | dirname }}"
         remote_src: yes
         validate_certs: false
