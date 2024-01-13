@@ -6,12 +6,6 @@
   vars:
     site_root: /usr/share/nginx/demo
 
-  roles:
-    - name: systemd_nginx
-      vars:
-        systemd_nginx_path_modified: "{{ site_root }}"
-        systemd_nginx_eda_webhook: "http://192.168.0.108:5003/endpoint"
-
   tasks:
     - name: Unarchive a file that needs to be downloaded (added in 2.0)
       ansible.builtin.unarchive:
@@ -25,3 +19,10 @@
         name: nginx
         state: restarted
         enabled: true
+
+    - name: Setup unit files
+      ansible.builtin.include_role:
+        name: systemd_nginx
+      vars:
+        systemd_nginx_path_modified: "{{ site_root }}"
+        systemd_nginx_eda_webhook: "http://192.168.0.108:5003/endpoint"
