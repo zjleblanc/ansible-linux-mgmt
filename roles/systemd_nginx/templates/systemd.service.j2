@@ -2,7 +2,7 @@
 Description="Call back to Ansible Controller for Rescue of {{ systemd_nginx_path_modified }}"
 
 [Service]
-ExecStart=/usr/bin/curl -v -k -s -i -X POST -H 'Content-Type:application/json' --data '{"_hosts": "{{ inventory_hostname }}", "path": "{{ systemd_nginx_path_modified }}", origin: "{{ systemd_nginx_service_name }}.service"}' {{ systemd_nginx_eda_webhook }}
+ExecStart=/usr/bin/curl -v -k -s -i -X POST -H 'Content-Type:application/json' --data '{"_hosts": "{{ inventory_hostname }}", "path": "{{ systemd_nginx_path_modified }}", "origin": "{{ systemd_nginx_service_name }}.service"}' {{ systemd_nginx_eda_webhook }}
 
 [Install]
 WantedBy=multi-user.target
