@@ -1,0 +1,5 @@
+---
+systemd_nginx_path_unit_name: demosite
+systemd_nginx_service_name: deploydemosite
+systemd_nginx_path_modified: /usr/share/nginx/demo
+# systemd_nginx_eda_webhook: 10.0.1.15:5001/endpoint # url for an active eda webhook source

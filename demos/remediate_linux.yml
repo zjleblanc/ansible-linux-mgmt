@@ -1,0 +1,49 @@
+---
+- hosts: "{{ _hosts | default(omit) }}"
+  name: Update demo site
+  become: true
+
+  vars:
+    site_root: /usr/share/nginx/demo
+
+  roles:
+    - name: systemd_nginx
+      vars:
+        systemd_nginx_path_modified: "{{ site_root }}"
+        systemd_nginx_eda_webhook: "http://192.168.0.108:5003/endpoint"
+
+  tasks:
+    # Avoid an event loop when restoring site from tar
+    - name: Stop path and service
+      loop:
+        - "{{ systemd_nginx_path_unit_name }}.path"
+        - "{{ systemd_nginx_service_name }}.service"
+      loop_control:
+        loop_var: unit
+      ansible.builtin.systemd:
+        name: "{{ unit }}"
+        state: stopped
+        
+    - name: Unarchive a file that needs to be downloaded (added in 2.0)
+      ansible.builtin.unarchive:
+        src: https://artifacts.autodotes.com/demo-site.tar.gz
+        dest: "{{ site_root | dirname }}"
+        remote_src: yes
+        validate_certs: false
+
+    - name: Restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+        enabled: true
+
+    - name: Start path and service
+      loop:
+        - "{{ systemd_nginx_path_unit_name }}.path"
+        - "{{ systemd_nginx_service_name }}.service"
+      loop_control:
+        loop_var: unit
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        enabled: true
+        state: started

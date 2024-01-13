@@ -1,0 +1,25 @@
+---
+- name: Setup path unit
+  ansible.builtin.template:
+    src: systemd.path.j2
+    dest: /etc/systemd/system/{{ systemd_nginx_path_unit_name }}.path
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Setup Service
+  ansible.builtin.template:
+    src: systemd.service.j2
+    dest: /etc/systemd/system/{{ systemd_nginx_service_name }}.service
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Enable Path and Service and start
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  loop:
+    - "{{ systemd_nginx_path_unit_name }}.path"
+    - "{{ systemd_nginx_service_name }}.service"

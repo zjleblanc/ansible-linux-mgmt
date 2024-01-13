@@ -1,0 +1,27 @@
+---
+- hosts: "{{ _hosts | default(omit) }}"
+  name: Setup systemd and nginx site on host
+  become: true
+
+  vars:
+    site_root: /usr/share/nginx/demo
+
+  roles:
+    - name: systemd_nginx
+      vars:
+        systemd_nginx_path_modified: "{{ site_root }}"
+        systemd_nginx_eda_webhook: "http://192.168.0.108:5003/endpoint"
+
+  tasks:
+    - name: Unarchive a file that needs to be downloaded (added in 2.0)
+      ansible.builtin.unarchive:
+        src: https://artifacts.autodotes.com/demo-site.tar.gz
+        dest: "{{ site_root | dirname }}"
+        remote_src: yes
+        validate_certs: false
+
+    - name: Enable nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+        enabled: true

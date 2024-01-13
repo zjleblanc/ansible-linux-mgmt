@@ -1,0 +1,9 @@
+[Unit]
+Description=Monitor {{ systemd_nginx_path_modified }} for changes
+
+[Path]
+PathModified={{ systemd_nginx_path_modified }}
+Unit={{ systemd_nginx_service_name }}.service
+
+[Install]
+WantedBy=multi-user.target

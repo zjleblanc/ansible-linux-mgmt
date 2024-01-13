@@ -1,0 +1,16 @@
+galaxy_info:
+  author: Zachary LeBlanc
+  description: Automation Solution Architect
+  company: Red Hat
+
+  license: GPL-2.0-or-later
+
+  min_ansible_version: "2.1"
+
+  galaxy_tags:
+    - systemd
+    - nginx
+    - eda
+    - remediation
+
+dependencies: []
