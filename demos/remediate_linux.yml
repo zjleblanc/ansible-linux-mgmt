@@ -6,12 +6,6 @@
   vars:
     site_root: /usr/share/nginx/demo
 
-  roles:
-    - name: systemd_nginx
-      vars:
-        systemd_nginx_path_modified: "{{ site_root }}"
-        systemd_nginx_eda_webhook: "http://192.168.0.108:5003/endpoint"
-
   tasks:
     # Avoid an event loop when restoring site from tar
     - name: Stop path and service
@@ -44,6 +38,6 @@
       loop_control:
         loop_var: unit
       ansible.builtin.systemd:
-        name: "{{ item }}"
+        name: "{{ unit }}"
         enabled: true
         state: started
