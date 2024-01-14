@@ -75,7 +75,7 @@
       delegate_to: localhost
       servicenow.itsm.incident:
         state: new
-        description: "Too many attempts to manually update demo site - {{ counter }} today - {{ ansible_date_time.date }}"
+        description: "Too many attempts to manually update demo site - {{ awx_remediation_job_count }} today - {{ ansible_date_time.date }}"
         short_description: "Demo Site Update Violation"
         caller: admin
         urgency: "medium"
