@@ -15,6 +15,11 @@
       ansible.builtin.systemd_service:
         name: "{{ systemd_nginx_path_unit_name }}.path"
         state: stopped
+
+    - name: Clean destination directory
+      ansible.builtin.file:
+        name: "{{ site_root }}"
+        state: absent
         
     - name: Unarchive a file that needs to be downloaded (added in 2.0)
       ansible.builtin.unarchive:
