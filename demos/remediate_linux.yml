@@ -51,7 +51,7 @@
 
     - name: Get Remediation Job Runs
       ansible.builtin.set_fact:
-        awx_remediation_jobs: "{{ lookup('ansible.controller.controller_api', 'hosts/' + awx_host_details['id'] + '/job_host_summaries', query={'job__job_template_id': awx_job_template_id, 'created__regex': ansible_date_time.date}) }}"
+        awx_remediation_jobs: "{{ lookup('ansible.controller.controller_api', 'hosts/' + awx_host_details['id']|string + '/job_host_summaries', query={'job__job_template_id': awx_job_template_id, 'created__regex': ansible_date_time.date}) }}"
 
     # - name: Retrieve Job Summaries
     #   ansible.builtin.uri:
