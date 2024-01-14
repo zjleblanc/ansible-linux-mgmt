@@ -42,7 +42,16 @@
 
     - name: Get Host id
       ansible.builtin.set_fact:
-        awx_host_id: "{{ lookup('ansible.controller.controller_api', 'hosts', query={'name': inventory_hostname, 'inventory_id': awx_inventory_id}, expect_one=true) }}"
+        awx_host_details: "{{ lookup('ansible.controller.controller_api', 'hosts', query={'name': inventory_hostname, 'inventory_id': awx_inventory_id}, expect_one=true) }}"
+
+    - name: Get date
+      ansible.builtin.setup:
+        gather_subset:
+          - date_time
+
+    - name: Get Remediation Job Runs
+      ansible.builtin.set_fact:
+        awx_remediation_jobs: "{{ lookup('ansible.controller.controller_api', 'hosts/' + awx_host_details['id'] + '/job_host_summaries', query={'job__job_template_id': awx_job_template_id, 'created__regex': ansible_date_time.date}) }}"
 
     # - name: Retrieve Job Summaries
     #   ansible.builtin.uri:
