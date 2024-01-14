@@ -41,7 +41,7 @@
         state: started
 
     - name: Get Host id
-      ansible.buitin.set_fact:
+      ansible.builtin.set_fact:
         awx_host_id: "{{ lookup('ansible.controller.controller_api', 'hosts', query={'name': inventory_hostname, 'inventory_id': awx_inventory_id}), expect_one=true }}"
 
     # - name: Retrieve Job Summaries
