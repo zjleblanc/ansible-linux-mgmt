@@ -58,35 +58,33 @@
       ansible.builtin.set_fact:
         awx_remediation_job_count: "{{ awx_remediation_jobs | regex_findall('processed') | length }}"
 
-    - name: Check if ServiceNow Incident exists
+    - name: Manage ServiceNow Incident
       when: awx_remediation_job_count|int >= manual_update_alert_min
-      delegate_to: localhost
-      register: r_incident_query
-      servicenow.itsm.incident_info:
-        query:
-          - description: "ENDSWITH {{ ansible_date_time.date }}"
-            short_description: = Demo Site Update Violation
-            caller: = admin
+      block:
+        - name: Check if ServiceNow Incident exists
+          delegate_to: localhost
+          register: r_incident_query
+          servicenow.itsm.incident_info:
+            query:
+              - description: "ENDSWITH {{ ansible_date_time.date }}"
+                short_description: = Demo Site Update Violation
+                caller: = admin
 
-    - name: Create ServiceNow Incident
-      when:
-        - r_incident_query is defined
-        - r_incident_query.records|length == 0
-      delegate_to: localhost
-      servicenow.itsm.incident:
-        state: new
-        description: "Too many attempts to manually update demo site - {{ awx_remediation_job_count }} today - {{ ansible_date_time.date }}"
-        short_description: "Demo Site Update Violation"
-        caller: admin
-        urgency: "medium"
-        impact: "high"
-        other:
-          u_vm_name: "{{ inventory_hostname | default(omit) }}"
+        - name: Create ServiceNow Incident
+          when: r_incident_query.records|length == 0
+          delegate_to: localhost
+          servicenow.itsm.incident:
+            state: new
+            description: "Too many attempts to manually update demo site - {{ awx_remediation_job_count }} today - {{ ansible_date_time.date }}"
+            short_description: "Demo Site Update Violation"
+            caller: admin
+            urgency: "medium"
+            impact: "high"
+            other:
+              u_vm_name: "{{ inventory_hostname | default(omit) }}"
 
-    - name: Update ServiceNow Incident
-      when:
-        - r_incident_query is defined
-        - r_incident_query.records|length > 0
-      delegate_to: localhost
-      ansible.builtin.debug:
-        msg: "TODO: implement update"
+        - name: Update ServiceNow Incident
+          when: r_incident_query.records|length > 0 
+          delegate_to: localhost
+          ansible.builtin.debug:
+            msg: "TODO: implement update"
