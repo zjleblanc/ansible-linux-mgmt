@@ -2,7 +2,7 @@
 - name: Respond to EDA
   hosts: "{{ _hosts }}"
   gather_facts: false
-  
+
   tasks:
     - name: Restart service
       ansible.builtin.service:
