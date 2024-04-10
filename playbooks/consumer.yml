@@ -7,9 +7,13 @@
   # This is my API definition #
   # Each *_query variable should be defined at the Job Template level #
   vars:
-    record_count: "{{ output | json_query(record_count_query) }}"
-    titles: "{{ output | json_query(titles_query) }}"
-    latest: "{{ output | json_query(latest_query) }}"
+    # output: "{{ (lookup('file', 'vars/movies.json') | from_json).results }}"
+    # record_count_query: "length([])"
+    # titles_query: "[].title"
+    # latest_query: "sort_by([], &release_date) | [0]"
+    record_count: "{{ output | to_json | from_json |  json_query(record_count_query) }}"
+    titles: "{{ output | to_json | from_json |  json_query(titles_query) }}"
+    latest: "{{ output | to_json | from_json | json_query(latest_query) }}"
 
   tasks:
     - name: Assert required outputs
@@ -19,6 +23,14 @@
           - titles_query is defined
           - latest_query is defined
 
-    - name: Debug data
+    - name: Debug record_count
       ansible.builtin.debug:
-        msg: "record_count: {{ record_count }}\ntitles: {{ titles }}\nlatest: {{ latest }}"
+        msg: "record_count: {{ record_count }}"
+
+    - name: Debug titles
+      ansible.builtin.debug:
+        msg: "titles: {{ titles }}"
+
+    - name: Debug latest
+      ansible.builtin.debug:
+        msg: "latest: {{ latest }}"
