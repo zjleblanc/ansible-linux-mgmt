@@ -1,0 +1,24 @@
+---
+- name: Consume data
+  hosts: localhost
+  become: false
+  gather_facts: false
+
+  # This is my API definition #
+  # Each *_query variable should be defined at the Job Template level #
+  vars:
+    record_count: "{{ output | json_query(record_count_query) }}"
+    titles: "{{ output | json_query(titles_query) }}"
+    latest: "{{ output | json_query(latest_query) }}"
+
+  tasks:
+    - name: Assert required outputs
+      ansible.builtin.assert:
+        that:
+          - record_count_query is defined
+          - titles_query is defined
+          - latest_query is defined
+
+    - name: Debug data
+      ansible.builtin.debug:
+        msg: "record_count: {{ record_count }}\ntitles: {{ titles }}\nlatest: {{ latest }}"

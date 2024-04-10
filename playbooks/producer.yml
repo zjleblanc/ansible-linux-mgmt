@@ -1,0 +1,18 @@
+---
+- name: Produce data
+  hosts: localhost
+  become: false
+  gather_facts: false
+
+  vars:
+    tmdb_data: "{{ lookup('file', 'vars/movies.json') | from_json }}"
+
+  tasks:
+    - name: Debug data
+      ansible.builtin.debug:
+        var: tmdb_data.results
+
+    - name: Produce data as stats
+      ansible.builtin.set_stats:
+        data:
+          output: "{{ tmdb_data.results }}"
