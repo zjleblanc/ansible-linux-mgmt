@@ -7,4 +7,4 @@
   tasks:
     - name: Say hello
       ansible.builtin.debug:
-        msg: "Hello {{ audience | default('world') }}!"
+        msg: "Hello {{ audience | default('world') }}, this is Ansible here!"
