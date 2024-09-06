@@ -2,6 +2,7 @@
 .vscode/
 sandbox
 
+.ansible_vault
 ansible.cfg
 **/ansible-navigator.log
 execution-environments/**/context/

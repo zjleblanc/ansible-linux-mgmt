@@ -1,0 +1,20 @@
+---
+- name: Login random sample of users
+  hosts: camp
+  gather_facts: false
+
+  vars_files:
+    - vars/camper_creds.yml
+    - vars/campers.yml
+
+  tasks:
+    - name: Login users
+      loop: "{{ campers | random_sample(size=3) }}"
+      loop_control:
+        loop_var: camper
+        label: "{{ camper.username }}"
+      vars:
+        ansible_user: "{{ camper.username }}"
+        ansible_password: "{{ camper_password }}"
+      ansible.builtin.stat:
+        path: "{{ camper.home }}"

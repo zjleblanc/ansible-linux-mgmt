@@ -1,0 +1,22 @@
+---
+- name: Create users
+  hosts: camp
+  gather_facts: false
+  become: true
+
+  vars_files:
+    - vars/camper_creds.yml
+    - vars/campers.yml
+
+  tasks:
+    - name: Create campers group
+      ansible.builtin.group:
+        name: campers
+
+    - name: Create users
+      loop: "{{ campers }}"
+      loop_control:
+        loop_var: camper
+        label: "{{ camper.username }}"
+      ansible.builtin.include_tasks:
+        file: tasks/user_create.yml

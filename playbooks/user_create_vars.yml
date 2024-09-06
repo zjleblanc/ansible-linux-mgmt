@@ -1,0 +1,14 @@
+---
+- name: Create users
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: read file
+      ansible.builtin.set_fact:
+        users: "{{ lookup('file', 'vars/names.txt').split('\n') | parse_usernames }}"
+
+    - name: write to vars
+      ansible.builtin.copy:
+        content: "{{ users | to_nice_yaml }}"
+        dest: "{{ playbook_dir }}/vars/campers.yml"
