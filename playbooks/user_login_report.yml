@@ -1,0 +1,31 @@
+- name: Login random sample of users
+  hosts: camp
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Run last
+      register: r_last
+      ansible.builtin.command: last -Fw
+
+    - name: Get last data
+      ansible.builtin.set_fact:
+        last_data: "{{ r_last.stdout | community.general.jc('last') }}"
+
+    - name: Get homedir data
+      loop: "{{ last_data | map(attribute='user') | unique }}"
+      loop_control:
+        loop_var: user
+      register: r_homedirs
+      when: user != 'reboot'
+      ansible.builtin.command: "du --max-depth=1 -h /home/{{ user }}"
+
+    - name: Parse homedir data
+      ansible.builtin.set_fact:
+        homedirs: "{{ r_homedirs.results | json_query('[].{user: user, size: stdout_lines[-1]}') | items2dict(key_name='user', value_name='size') }}"
+
+    - name: Print output for debugging
+      delegate_to: localhost
+      ansible.builtin.copy:
+        content: "{{ last_data | last_reportify(homedirs=homedirs) | to_nice_yaml }}"
+        dest: "{{ playbook_dir }}/files/last_report.yml"
