@@ -1,12 +1,12 @@
 - name: Login random sample of users
-  hosts: camp
+  hosts: "{{ ansible_limit | default(omit)  }}"
   gather_facts: false
   become: true
 
   tasks:
     - name: Run last
       register: r_last
-      ansible.builtin.command: last -Fw
+      ansible.builtin.command: last -Fw -{{ last_records_max | default(100) }}
 
     - name: Get last data
       ansible.builtin.set_fact:
@@ -24,8 +24,17 @@
       ansible.builtin.set_fact:
         homedirs: "{{ r_homedirs.results | json_query('[].{user: user, size: stdout_lines[-1]}') | items2dict(key_name='user', value_name='size') }}"
 
-    - name: Print output for debugging
-      delegate_to: localhost
-      ansible.builtin.copy:
-        content: "{{ last_data | last_reportify(homedirs=homedirs) | to_nice_yaml }}"
-        dest: "{{ playbook_dir }}/files/last_report.yml"
+    - name: Set report data fact
+      ansible.builtin.set_fact:
+        last_report_data: "{{ last_data | last_reportify(homedirs=homedirs) }}"
+
+    - name: Generate report
+      run_once: true
+      ansible.builtin.include_role:
+        name: zjleblanc.reporting.table_per_host
+      vars:
+        table_title: Last Login Report
+        table_desc: Report based on last output with relevant home directory information
+        table_data_fact: last_report_data
+        table_output_remote_host: raspi
+        table_output_dest: /var/www/reports.autodotes.com/roles/table_per_host.last_login.html
