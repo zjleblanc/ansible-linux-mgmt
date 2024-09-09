@@ -1,5 +1,5 @@
 - name: Login random sample of users
-  hosts: "{{ ansible_limit | default(omit)  }}"
+  hosts: "{{ _hosts | default(omit)  }}"
   gather_facts: false
   become: true
 
@@ -33,8 +33,8 @@
       ansible.builtin.include_role:
         name: zjleblanc.reporting.table_per_host
       vars:
-        table_title: Last Login Report
-        table_desc: Report based on last output with relevant home directory information
+        table_title: "{{ report_title }}"
+        table_desc: "{{ report_desc }}"
         table_data_fact: last_report_data
-        table_output_remote_host: raspi
-        table_output_dest: /var/www/reports.autodotes.com/roles/table_per_host.last_login.html
+        table_output_remote_host: "{{ report_server }}"
+        table_output_dest: "{{ report_dest }}"
