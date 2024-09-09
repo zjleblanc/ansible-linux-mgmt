@@ -3,6 +3,13 @@
   gather_facts: false
   become: true
 
+  # vars:
+  #   last_records_max: # passed to last command
+  #   report_title: Last Login Report
+  #   report_desc: Combining last command output with home directory data
+  #   report_server: # must be a host in your inventory
+  #   report_dest: /var/www/html/report.html # landing spot on report_server for generated html
+
   tasks:
     - name: Run last
       register: r_last
