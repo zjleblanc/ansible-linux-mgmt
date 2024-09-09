@@ -15,7 +15,6 @@
 
     - name: Build Containers via defined configs
       when: proxmox_ve_configs is defined
-      loop: "{{ proxmox_ve_configs }}"
       loop_control:
         loop_var: pve_config
       community.general.proxmox:
@@ -37,7 +36,7 @@
         pubkey: "{{ pve_config.pubkey | default(omit) }}"
         state: present
         storage: "{{ pve_config.storage | default('local-lvm') }}"
-        tags: "{{ pve_config.tags | default(omit) }}"
+        tags: "{{ proxmox_ve_configs }}"
         timeout: "{{ pve_config.timeout | default(1200) }}"
 
     - name: Build Containers from survey

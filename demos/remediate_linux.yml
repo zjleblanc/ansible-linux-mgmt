@@ -12,6 +12,7 @@
 
   tasks:
     # Avoid an event loop when restoring site from tar
+
     - name: Stop path monitor
       ansible.builtin.systemd_service:
         name: "{{ systemd_nginx_path_unit_name }}.path"
@@ -43,7 +44,8 @@
 
     - name: Get Host id
       ansible.builtin.set_fact:
-        awx_host_details: "{{ lookup('ansible.controller.controller_api', 'hosts', query={'name': inventory_hostname, 'inventory_id': awx_inventory_id}, expect_one=true) }}" # noqa yaml[line-length]
+        awx_host_details: "{{ lookup('ansible.controller.controller_api', 'hosts', query={'name': inventory_hostname, 'inventory_id': awx_inventory_id}, expect_one=true)
+          }}" # noqa yaml[line-length]
 
     - name: Get date
       ansible.builtin.setup:
@@ -52,7 +54,8 @@
 
     - name: Get Remediation Job Runs
       ansible.builtin.set_fact:
-        awx_remediation_jobs: "{{ lookup('ansible.controller.controller_api', 'hosts/' + awx_host_details['id'] | string + '/job_host_summaries', query={'job__job_template_id': awx_job_template_id, 'created__regex': ansible_date_time.date}) }}" # noqa yaml[line-length]
+        awx_remediation_jobs: "{{ lookup('ansible.controller.controller_api', 'hosts/' + awx_host_details['id'] | string + '/job_host_summaries', query={'job__job_template_id':
+          awx_job_template_id, 'created__regex': ansible_date_time.date}) }}" # noqa yaml[line-length]
 
     - name: Determine remediation job runs today
       ansible.builtin.set_fact:
