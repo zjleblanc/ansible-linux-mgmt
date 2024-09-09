@@ -13,7 +13,7 @@
         - name: Check if camp is open
           ansible.builtin.wait_for_connection:
           timeout: 30
-      rescue:
+
         - name: Gracefully bail out if camp is closed
           ansible.builtin.meta: end_play
 

@@ -78,7 +78,7 @@
         mode: "0644"
 
     # This is necessary due to an error where awx did not have permission to read
-    # /var/run/supervisor. Telling systemd to recreate its tmp files fixes this.
+
     - name: Recreate systemd tmp files # noqa: no-changed-when
       ansible.builtin.command: systemd-tmpfiles --create
 
@@ -92,3 +92,28 @@
       ansible.builtin.wait_for:
         path: /var/run/supervisor/supervisor.sock
         timeout: 30
+    - name: Restart supervisor
+      ansible.builtin.debug:
+        msg: Restarting supervisor.
+      changed_when: true
+      notify:
+        - Stop supervisor.
+        - Wait for supervisor to stop.
+
+    - name: Stop supervisor.
+      ansible.builtin.service:
+        name: supervisord
+        state: stopped
+
+    - name: Wait for supervisor to stop.
+      ansible.builtin.stat:
+        path: /var/run/supervisor/supervisor.sock
+      register: result
+      until: not result.stat.exists
+      retries: 10
+      delay: 2
+
+    - name: Start supervisor.
+      ansible.builtin.service:
+        name: supervisord
+        state: started

@@ -12,6 +12,7 @@
 
   tasks:
     # Note that check mode cannot be used with async tasks
+
     - name: Download installed package updates
       async: 600 # run for 10 minutes
       poll: 0 # continue playbook execution

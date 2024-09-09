@@ -15,7 +15,6 @@
 
     - name: Build VMs via defined configs
       when: proxmox_vm_configs is defined
-      loop: "{{ proxmox_vm_configs }}"
       loop_control:
         loop_var: pve_config
       community.general.proxmox_kvm:
@@ -38,7 +37,7 @@
         scsihw: "{{ pve_config.scsihw | default(omit) }}"
         sockets: "{{ pve_config.sockets | default(omit) }}"
         state: present
-        tags: "{{ pve_config.tags | default(omit) }}"
+        tags: "{{ proxmox_vm_configs }}"
         timeout: "{{ pve_config.timeout | default(1200) }}"
         virtio: "{{ pve_config.virtio | default(omit) }}"
 

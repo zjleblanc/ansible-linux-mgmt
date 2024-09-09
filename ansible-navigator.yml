@@ -1,3 +1,4 @@
+---
 ansible-navigator:
   editor:
     command: code -g {filename}:{line_number}
