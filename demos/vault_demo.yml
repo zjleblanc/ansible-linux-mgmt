@@ -1,0 +1,23 @@
+---
+- name: Demo use of ansible-vault
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  tasks:
+    - name: Lookup credentials from ansible variables
+      ansible.builtin.debug:
+        msg: >
+          ansible vars:
+          {{ vault_demo_user | default('undefined') }} (user) /
+          {{ vault_demo_password | default('undefined') }} (password)
+
+    - name: Lookup credentials from environment variables
+      vars:
+        env_vault_demo_user: "{{ lookup('env', 'VAULT_DEMO_USER') }}"
+        emv_vault_demo_password: "{{ lookup('env', 'VAULT_DEMO_PASSWORD') }}"
+      ansible.builtin.debug:
+        msg: >
+          environment vars:
+          {{ env_vault_demo_user | ternary(env_vault_demo_user, 'undefined') }} (user) /
+          {{ emv_vault_demo_password | ternary(emv_vault_demo_password, 'undefined') }} (password)
