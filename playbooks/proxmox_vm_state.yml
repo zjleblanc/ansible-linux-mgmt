@@ -1,0 +1,25 @@
+---
+- name: Manage proxmox instance(s) state
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  # Example
+  # vars:
+  #   proxmox_instances:
+  #     - id: 100
+  #       state: started
+
+  tasks:
+    - name: Assert instances defined
+      ansible.builtin.assert:
+        that: proxmox_instances is defined
+
+    - name: Manage instance state
+      loop: "{{ proxmox_instances }}"
+      loop_control:
+        loop_var: instance
+        label: "{{ instance.id }}"
+      community.general.proxmox:
+        vmid: "{{ instance.id }}"
+        state: "{{ instance.state }}"
