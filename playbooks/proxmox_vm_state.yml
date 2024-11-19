@@ -6,9 +6,9 @@
 
   # Example
   # vars:
-  #   proxmox_instances:
-  #     - node: pve
-  #       name: mgmt
+  #   proxmox_kvms:
+  #     - node: nuc
+  #       name: camp
   #       state: started
 
   tasks:
