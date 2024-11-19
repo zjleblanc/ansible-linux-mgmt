@@ -23,3 +23,5 @@
       community.general.proxmox:
         vmid: "{{ instance.id }}"
         state: "{{ instance.state }}"
+        api_token_id: "{{ proxmox_api_token_id }}"
+        api_token_secret: "{{ proxmox_api_token_secret }}"
