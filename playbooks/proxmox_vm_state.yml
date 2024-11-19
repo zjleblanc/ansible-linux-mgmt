@@ -7,7 +7,8 @@
   # Example
   # vars:
   #   proxmox_instances:
-  #     - id: 100
+  #     - node: pve
+  #       name: mgmt
   #       state: started
 
   tasks:
@@ -19,9 +20,10 @@
       loop: "{{ proxmox_kvms }}"
       loop_control:
         loop_var: kvm
-        label: "{{ kvm.id }}"
+        label: "{{ kvm.name }}@{{ kvm.node }}"
       community.general.proxmox_kvm:
-        vmid: "{{ kvm.id }}"
+        node: "{{ kvm.node }}"
+        name: "{{ kvm.name }}"
         state: "{{ kvm.state }}"
         api_token_id: "{{ proxmox_api_token_id }}"
         api_token_secret: "{{ proxmox_api_token_secret }}"
