@@ -23,6 +23,3 @@
       community.general.proxmox:
         vmid: "{{ instance.id }}"
         state: "{{ instance.state }}"
-        api_host: "{{ proxmox_api_host }}"
-        api_user: "{{ proxmox_api_user }}"
-        api_password: "{{ proxmox_api_password }}"
