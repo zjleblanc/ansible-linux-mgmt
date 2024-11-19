@@ -1,5 +1,5 @@
 ---
-- name: Manage proxmox instance(s) state
+- name: Manage proxmox kvm(s) state
   hosts: localhost
   gather_facts: false
   become: false
@@ -11,17 +11,17 @@
   #       state: started
 
   tasks:
-    - name: Assert instances defined
+    - name: Assert kvms defined
       ansible.builtin.assert:
-        that: proxmox_instances is defined
+        that: proxmox_kvms is defined
 
-    - name: Manage instance state
-      loop: "{{ proxmox_instances }}"
+    - name: Manage kvm state
+      loop: "{{ proxmox_kvms }}"
       loop_control:
-        loop_var: instance
-        label: "{{ instance.id }}"
-      community.general.proxmox:
-        vmid: "{{ instance.id }}"
-        state: "{{ instance.state }}"
+        loop_var: kvm
+        label: "{{ kvm.id }}"
+      community.general.proxmox_kvm:
+        vmid: "{{ kvm.id }}"
+        state: "{{ kvm.state }}"
         api_token_id: "{{ proxmox_api_token_id }}"
         api_token_secret: "{{ proxmox_api_token_secret }}"
