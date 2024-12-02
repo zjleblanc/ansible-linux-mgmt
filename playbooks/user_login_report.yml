@@ -11,6 +11,10 @@
   #   report_dest: /var/www/html/report.html # landing spot on report_server for generated html
 
   tasks:
+    - name: Wait for SSH
+      ansible.builtin.wait_for_connection:
+        timeout: 60
+
     - name: Run last
       register: r_last
       ansible.builtin.command: last -Fw -{{ last_records_max | default(100) }}
