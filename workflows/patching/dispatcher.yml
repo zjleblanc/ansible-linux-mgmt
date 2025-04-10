@@ -10,3 +10,9 @@
 
     - name: Check service status
       ansible.builtin.service_facts:
+
+    - name: Group by operating system
+      delegate_to: localhost
+      run_once: true
+      ansible.builtin.set_fact:
+        dispatch_groups: "{{ hostvars | group_by_path }}"
