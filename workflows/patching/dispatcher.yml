@@ -11,15 +11,25 @@
         state: latest
         update_cache: true
 
-    - name: DEBUG
-      ansible.builtin.debug:
-        msg: "{{ hostvars[inventory_hostname]['ansible_facts'] }}"
-
     - name: Check service status
       ansible.builtin.service_facts:
+
+    - name: Prep hosts for grouping
+      ansible.builtin.set_fact:
+        dispatch_host_metadata: |
+          [
+            {% for host in ansible_play_hosts %}
+            {
+              "inventory_hostname": "{{ host }}",
+              "version": "{{ hostvars[host]['ansible_facts']['distribution_version'] }}",
+              "kernel": "{{ hostvars[host]['ansible_facts']['kernel'] }}",
+              "arch": "{{ hostvars[host]['ansible_facts']['architecture'] }}"
+            },
+            {% endfor %}
+          ]
 
     - name: Group by operating system
       delegate_to: localhost
       run_once: true
       ansible.builtin.set_fact:
-        dispatch_groups: "{{ hostvars | group_by_path }}"
+        dispatch_groups: "{{ dispatch_host_metadata | group_by_path }}"
