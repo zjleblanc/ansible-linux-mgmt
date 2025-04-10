@@ -7,6 +7,9 @@
     - name: Identify DNF changes
       check_mode: true
       ansible.builtin.dnf:
+        name: '*'
+        state: latest
+        update_cache: true
 
     - name: Check service status
       ansible.builtin.service_facts:
