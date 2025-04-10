@@ -1,6 +1,7 @@
 ---
 - name: Pre-process patch targets and dispatch jobs
-  hosts: "{{ patch_targets }}"
+  hosts: "{{ patch_targets | default(omit) }}"
+  become: true
 
   tasks:
     - name: Identify DNF changes
