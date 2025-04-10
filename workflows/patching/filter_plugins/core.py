@@ -12,7 +12,7 @@ class FilterModule(object):
         }
 
         for host in hostvars:
-          version = hostvars[host]['ansible_facts']['distribution_version']
+          version = hostvars[host]['ansible_facts']['ansible_distribution_version']
           if version == '8.10':
             groups["rhel8_10"].append(host)
           elif version == '9.5':

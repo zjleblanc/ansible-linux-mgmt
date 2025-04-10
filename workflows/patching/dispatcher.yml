@@ -11,6 +11,10 @@
         state: latest
         update_cache: true
 
+    - name: DEBUG
+      ansible.builtin.debug:
+        msg: "{{ hostvars[inventory_hostname]['ansible_facts'] }}"
+
     - name: Check service status
       ansible.builtin.service_facts:
 
