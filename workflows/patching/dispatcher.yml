@@ -1,0 +1,11 @@
+---
+- name: Pre-process patch targets and dispatch jobs
+  hosts: "{{ patch_targets }}"
+
+  tasks:
+    - name: Identify DNF changes
+      check_mode: true
+      ansible.builtin.dnf:
+
+    - name: Check service status
+      ansible.builtin.service_facts:
