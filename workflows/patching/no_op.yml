@@ -3,9 +3,16 @@
   hosts: "{{ patch_targets }}"
   gather_facts: false
 
+  vars:
+    task_purpose: This is a no-op task for demo purposes
+    task_output:
+      action: generic
+
   tasks:
     - name: Automation task
       ansible.builtin.debug:
-        msg: |
-          Running automation on {{ inventory_hostname }}...
-          {{ task purpose | default('This is a no-op task for demo purposes') }}
+        msg: "{{ task_purpose }}"
+
+    - name: Pass data
+      ansible.builtin.set_stats:
+        data: "{{ task_output }}"
