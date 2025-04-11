@@ -1,0 +1,11 @@
+---
+- name: Generic playbook to represent workflow node
+  hosts: "{{ patch_targets }}"
+  gather_facts: false
+
+  tasks:
+    - name: Automation task
+      ansible.builtin.debug:
+        msg: |
+          Running automation on {{ inventory_hostname }}...
+          {{ task purpose | default('This is a no-op task for demo purposes') }}
