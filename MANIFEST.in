@@ -1,7 +1,21 @@
-recursive-include demos *.yml
-recursive-include playbooks *.yml
-recursive-include roles *.yml
-recursive-include workflows *.yml
+recursive-include demos *
+recursive-include playbooks *
+recursive-include roles *
+recursive-include workflows *
+recursive-include .github *
+recursive-include scripts *
+recursive-include filter_plugins *
+recursive-include vars *
 
-include filter_plugins/*.py
-include vars/*.yml
+include .ansible-lint ansible-navigator.yml README.md
+
+exclude .ansible_vault ansible.cfg
+
+recursive-exclude inventories *
+recursive-exclude .git *
+recursive-exclude .ansible *
+recursive-exclude .cache *
+recursive-exclude .venv *
+recursive-exclude .vscode *
+
+global-exclude *.py[cod] .gitignore .DS_Store
