@@ -27,15 +27,15 @@
 
   vars:
     # for testing, override with survey
-    change_window_timezone: UTC
-    change_window_datetime: "2030-01-01 00:00:00"
+    change_window_timezone: America/Chicago
+    change_window_datetime: "2025-04-11 11:10:00"
 
   tasks:
     - name: Get current datetime
       environment:
         TZ: "{{ change_window_timezone }}"
       ansible.builtin.set_fact:
-        current_datetime: "{{ lookup('pipe', 'date \"+%Y-%m-%d %H:%M:%S\"') }}"
+        current_datetime: "{{ lookup('pipe', 'TZ=\"' + change_window_timezone + '\" date \"+%Y-%m-%d %H:%M:%S\"') }}"
 
     - name: Assert valid date time for change window
       ansible.builtin.assert:
