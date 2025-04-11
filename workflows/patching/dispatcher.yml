@@ -4,21 +4,48 @@
   become: true
 
   tasks:
-    - name: Identify DNF changes
-      check_mode: true
-      ansible.builtin.dnf:
-        name: '*'
-        state: latest
-        update_cache: true
+    # - name: Identify DNF changes
+    #   check_mode: true
+    #   ansible.builtin.dnf:
+    #     name: '*'
+    #     state: latest
+    #     update_cache: true
 
-    - name: Check service status
-      ansible.builtin.service_facts:
+    # - name: Check service status
+    #   ansible.builtin.service_facts:
+
+    - name: Record patch target hosts
+      ansible.builtin.add_host:
+        name: ledger
+        patch_target_hosts: "{{ ansible_play_hosts }}"
+
+- name: Dispatch schedules for downstream workflow
+  hosts: localhost
+  become: false
+  gather_facts: false
+
+  vars:
+    # for testing, override with survey
+    change_window_timezone: UTC
+    change_window_datetime: "2030-01-01 00:00:00"
+
+  tasks:
+    - name: Get current datetime
+      environment:
+        TZ: "{{ change_window_timezone }}"
+      ansible.builtin.set_fact:
+        current_datetime: "{{ lookup('pipe', 'date \"+%Y-%m-%d %H:%M:%S\"') }}"
+
+    - name: Assert valid date time for change window
+      ansible.builtin.assert:
+        that: (change_window_datetime|to_datetime - current_datetime|to_datetime).total_seconds() > 0
+        fail_msg: Please ensure that provided date time is in the future
 
     - name: Prep hosts for grouping
       ansible.builtin.set_fact:
         dispatch_host_metadata: |
           [
-            {% for host in ansible_play_hosts %}
+            {% for host in hostvars['ledger']['patch_target_hosts'] %}
             {
               "inventory_hostname": "{{ host }}",
               "version": "{{ hostvars[host]['ansible_facts']['distribution_version'] }}",
@@ -29,7 +56,26 @@
           ]
 
     - name: Group by operating system
-      delegate_to: localhost
-      run_once: true
       ansible.builtin.set_fact:
         dispatch_groups: "{{ dispatch_host_metadata | group_by_path }}"
+
+    - name: Create schedules
+      loop: "{{ dispatch_groups | dict2items }}"
+      loop_control:
+        loop_var: group
+        label: "{{ group.key }}"
+      ansible.controller.schedule:
+        name: "Patch Schedule {{ group.key }} @ {{ change_window_datetime }} {{ change_window_timezone }}"
+        unified_job_template: "Linux // Patching // {{ group.key }}"
+        rrule: "{{ query('awx.awx.schedule_rrule', 'none', start_date=change_window_datetime, timezone=change_window_timezone) }}"
+        extra_data: "{{ group.value }}"
+      register: result
+
+    - name: Set stats for demo purposes
+      ansible.builtin.set_stats:
+        data:
+          patch_target_pattern: "{{ patch_targets }}"
+          patch_targets: "{{ hostvars['ledger']['patch_target_hosts'] }}"
+          dispatch_groups: "{{ dispatch_groups }}"
+          change_window_datetime: "{{ change_window_datetime }}"
+          change_window_timezone: "{{ change_window_timezone }}"
