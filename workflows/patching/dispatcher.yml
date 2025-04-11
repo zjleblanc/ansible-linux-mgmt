@@ -32,8 +32,6 @@
 
   tasks:
     - name: Get current datetime
-      environment:
-        TZ: "{{ change_window_timezone }}"
       ansible.builtin.set_fact:
         current_datetime: "{{ lookup('pipe', 'TZ=\"' + change_window_timezone + '\" date \"+%Y-%m-%d %H:%M:%S\"') }}"
 
