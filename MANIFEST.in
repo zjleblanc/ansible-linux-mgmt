@@ -1,0 +1,7 @@
+recursive-include demos *.yml
+recursive-include playbooks *.yml
+recursive-include roles *.yml
+recursive-include workflows *.yml
+
+include filter_plugins/*.py
+include vars/*.yml

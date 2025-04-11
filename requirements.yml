@@ -1,5 +1,0 @@
----
-collections:
-  - community.general
-  - name: microsoft.sql
-    version: ">=1.3.0"
