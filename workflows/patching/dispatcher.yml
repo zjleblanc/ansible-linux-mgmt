@@ -4,17 +4,18 @@
   become: true
 
   tasks:
-    # - name: Identify DNF changes
-    #   check_mode: true
-    #   ansible.builtin.dnf:
-    #     name: '*'
-    #     state: latest
-    #     update_cache: true
+    - name: Identify DNF changes
+      check_mode: true
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+        update_cache: true
 
-    # - name: Check service status
-    #   ansible.builtin.service_facts:
+    - name: Check service status
+      ansible.builtin.service_facts:
 
     - name: Record patch target hosts
+      run_once: true
       ansible.builtin.add_host:
         name: ledger
         patch_target_hosts: "{{ ansible_play_hosts }}"
