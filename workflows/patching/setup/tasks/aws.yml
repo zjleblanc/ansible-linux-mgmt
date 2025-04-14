@@ -54,7 +54,7 @@
     subnets:
       - "{{ r_aws_subnet.subnet.id }}"
     routes:
-      - dest: 0.0.0.0/0
+      - dest: "0.0.0.0/0"
         gateway_id: "{{ r_aws_gw.gateway_id }}"
     tags: "{{ aws_base_tags | combine({'Name': aws_rt_name}) }}"
 

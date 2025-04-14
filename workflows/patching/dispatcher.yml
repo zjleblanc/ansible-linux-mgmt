@@ -7,7 +7,7 @@
     - name: Identify DNF changes
       check_mode: true
       ansible.builtin.dnf:
-        name: '*'
+        name: "*"
         state: latest
         update_cache: true
 
@@ -64,8 +64,8 @@
         loop_var: group
         label: "{{ group.key }}"
       ansible.controller.schedule:
-        name: "Patch Schedule {{ group.key }} @ {{ change_window_datetime }} {{ change_window_timezone }}"
-        unified_job_template: "Linux // Patching // {{ group.key }}"
+        name: Patch Schedule {{ group.key }} @ {{ change_window_datetime }} {{ change_window_timezone }}
+        unified_job_template: Linux // Patching // {{ group.key }}
         rrule: "{{ query('awx.awx.schedule_rrule', 'none', start_date=change_window_datetime, timezone=change_window_timezone) }}"
         extra_data: "{{ group.value }}"
       register: result

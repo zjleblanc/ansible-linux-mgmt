@@ -11,7 +11,7 @@
       ansible.builtin.unarchive:
         src: https://artifacts.autodotes.com/demo-site.tar.gz
         dest: "{{ site_root | dirname }}"
-        remote_src: yes
+        remote_src: true
         validate_certs: false
 
     - name: Enable nginx
@@ -25,4 +25,4 @@
         name: systemd_nginx
       vars:
         systemd_nginx_path_modified: "{{ site_root }}"
-        systemd_nginx_eda_webhook: "http://192.168.0.108:5003/endpoint"
+        systemd_nginx_eda_webhook: http://192.168.0.108:5003/endpoint
