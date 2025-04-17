@@ -34,4 +34,4 @@ Ansible repository for content used to manage Linux servers
 
 | Purpose | Source |
 | --- | --- |
-| Initiate workflows from ITSM Change Request and dispatch future jobs with Schedules | [📝](./workflows/patching/README.md) |
+| Initiate workflows from ITSM Change Request and dispatch future jobs | [📝](./workflows/patching/README.md) |
