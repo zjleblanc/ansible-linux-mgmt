@@ -7,13 +7,14 @@ recursive-include scripts *
 recursive-include filter_plugins *
 recursive-include vars *
 
-include .ansible-lint ansible-navigator.yml README.md
+include .ansible-lint ansible-navigator.yml *.md
 
 exclude .ansible_vault ansible.cfg
 
 recursive-exclude inventories *
 recursive-exclude .git *
 recursive-exclude .ansible *
+recursive-exclude .attachments *
 recursive-exclude .cache *
 recursive-exclude .venv *
 recursive-exclude .vscode *
