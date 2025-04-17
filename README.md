@@ -28,3 +28,10 @@ Ansible repository for content used to manage Linux servers
 | Join RHEL machine to Active Directory Domain | [📋](./demos/join_ad_domain.yml) | [📝](./demos/docs/join-ad-domain.md) |
 | Update login (or other) setting with lineinfile | _None_ | [📝](./demos/docs/min-pass-change.md) |
 | Build Containers from template<br>Simulate building out multiple Containers with configurable options | [📋](./demos/proxmox_container_build.yml) | |
+
+
+## Workflows
+
+| Purpose | Source |
+| --- | --- |
+| Initiate workflows from ITSM Change Request and dispatch future jobs with Schedules | [📝](./workflows/patching/README.md) |
