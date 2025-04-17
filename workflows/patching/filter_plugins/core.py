@@ -6,19 +6,14 @@ class FilterModule(object):
         }
 
     def do_path_determination(self, dispatch_host_metadata):
-        groups = {
-          "rhel8_10": {},
-          "rhel9_5": {}
-        }
+        groups = {}
 
-        for host in dispatch_host_metadata:
-          version = host['version']
-          name = host['inventory_hostname']
-          if version == '8.10':
-            groups["rhel8_10"].setdefault('patch_targets', []).append(name)
-            groups["rhel8_10"].setdefault('patch_targets_metadata', {})[name] = host
-          elif version == '9.5':
-            groups["rhel9_5"].setdefault('patch_targets', []).append(name)
-            groups["rhel9_5"].setdefault('patch_targets_metadata', {})[name] = host
+        for host_metadata in dispatch_host_metadata:
+          version = host_metadata['version']
+          group_key = 'rhel' + version.replace('.','_')
+          host_name = host_metadata['inventory_hostname']
+
+          groups.setdefault(group_key, {}).setdefault('patch_targets', []).append(host_name)
+          groups[group_key].setdefault('patch_targets_metadata', {})[host_name] = host_metadata
 
         return groups
