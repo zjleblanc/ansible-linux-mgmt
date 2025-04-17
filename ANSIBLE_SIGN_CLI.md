@@ -79,7 +79,9 @@ After completing these steps, Ansible Automation Platform will verify the signat
 
 ## Pre-commit Hook
 
-I am not capable of remembering to use `ansible-sign` before I push commits to my repository, so I added the commands to my pre-commit hook. If you are unfamiliar with git hooks, then navigate to the `.git/hooks` folder at the root of your repository and poke around. Below is an example of what my pre-commit hook looks like for this implementation.
+I am not capable of remembering to use `ansible-sign` every time I push a new change to my repository, so I added the commands to my pre-commit hook. Implementing a pre-commit ensures that the signature always matches the commit because the hook will automatically execute `ansible-sign` and stage the results before committing.
+
+If you are unfamiliar with git hooks, then navigate to the `.git/hooks` folder at the root of your repository and poke around. Below is an example of what my pre-commit hook looks like for this implementation.
 
 ### .git/hooks/pre-commit
 
