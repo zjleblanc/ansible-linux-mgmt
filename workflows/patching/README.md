@@ -2,7 +2,7 @@
 
 Mocked example using a Change Request to drive workload scheduling with Ansible Automation Platform.
 
-## Setup
+## Demo Setup
 
 - Use `AWS // Create VM` Job Template based on cloud-mgmt [playbook](https://github.com/zjleblanc/ansible-cloud-mgmt/blob/master/playbooks/aws/create_vm.yml) to provision 2 RHEL 8.10 instances and 2 RHEL 9.3 instances for demo purposes
 - Launch `Linux // Patching // Dispatcher` Workflow with a time in the near future
