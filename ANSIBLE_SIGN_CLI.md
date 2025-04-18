@@ -2,7 +2,7 @@
 
 The [ansible-sign](https://github.com/ansible/ansible-sign) tool makes it easy to sign and verify ansible content. This is a great way establish a trusted supply chain in your Ansible Automation Platform environment.
 
-Check out my blog post -> 📝
+Check out my blog post here -> 📝
 
 ## Generate Key-pair
 
