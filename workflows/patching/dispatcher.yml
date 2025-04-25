@@ -47,7 +47,7 @@
 
     - name: Path determination # simple example
       ansible.builtin.set_fact:
-        dispatch_workflow: "rhel_{{ ansible_distribution_version.replace('.', '_') }}"
+        dispatch_workflow: "rhel{{ ansible_distribution_version.replace('.', '_') }}"
 
     - name: Create schedule
       ansible.controller.schedule:
@@ -55,4 +55,3 @@
         unified_job_template: "Linux // Patching // {{ dispatch_workflow }}"
         rrule: "{{ query('awx.awx.schedule_rrule', 'none', start_date=change_window_datetime, timezone=change_window_timezone) }}"
         extra_data: "{{ dispatch_host_metadata }}"
-      register: result
