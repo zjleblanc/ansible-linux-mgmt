@@ -1,6 +1,6 @@
 ---
 - name: Pre-process patch targets and dispatch jobs
-  hosts: "{{ patch_targets | default(omit) }}"
+  hosts: "{{ patch_targets.keys() | default(omit) }}"
   become: true
 
   tasks:
@@ -14,21 +14,17 @@
     - name: Check service status
       ansible.builtin.service_facts:
 
-    - name: Record patch target hosts
-      run_once: true
-      ansible.builtin.add_host:
-        name: ledger
-        patch_target_hosts: "{{ ansible_play_hosts }}"
-
 - name: Dispatch schedules for downstream workflow
-  hosts: localhost
+  hosts: "{{ patch_targets.keys() | default(omit) }}"
   become: false
   gather_facts: false
 
   vars:
+    ansible_connection: local
     # for testing, override with survey
-    change_window_timezone: America/Chicago
-    change_window_datetime: "2025-04-11 11:10:00"
+    change_request: CHG01234 # source from ingress (itsm)
+    change_window_timezone: "{{ patch_targets[inventory_hostname]['change_window_timezone'] }}" # America/Chicago
+    change_window_datetime: "{{ patch_targets[inventory_hostname]['change_window_datetime'] }}" # "2025-04-11 11:10:00"
 
   tasks:
     - name: Get current datetime
@@ -40,41 +36,23 @@
         that: (change_window_datetime|to_datetime - current_datetime|to_datetime).total_seconds() > 0
         fail_msg: Please ensure that provided date time is in the future
 
-    - name: Prep hosts for grouping
+    - name: Prep host metadata
       ansible.builtin.set_fact:
-        dispatch_host_metadata: |
-          [
-            {% for host in hostvars['ledger']['patch_target_hosts'] %}
-            {
-              "inventory_hostname": "{{ host }}",
-              "version": "{{ hostvars[host]['ansible_facts']['distribution_version'] }}",
-              "kernel": "{{ hostvars[host]['ansible_facts']['kernel'] }}",
-              "arch": "{{ hostvars[host]['ansible_facts']['architecture'] }}"
-            },
-            {% endfor %}
-          ]
+        dispatch_host_metadata:
+          _hosts: "{{ inventory_hostname }}"
+          version: "{{ ansible_distribution_version }}"
+          kernel: "{{ ansible_kernel }}"
+          arch: "{{ ansible_architecture  }}"
+          change_request: "{{ change_request }}"
 
-    - name: Group by operating system
+    - name: Path determination # simple example
       ansible.builtin.set_fact:
-        dispatch_groups: "{{ dispatch_host_metadata | group_by_path }}"
+        dispatch_workflow: "rhel_{{ ansible_distribution_version.replace('.', '_') }}"
 
-    - name: Create schedules
-      loop: "{{ dispatch_groups | dict2items }}"
-      loop_control:
-        loop_var: group
-        label: "{{ group.key }}"
+    - name: Create schedule
       ansible.controller.schedule:
-        name: "Patch Schedule {{ group.key }} @ {{ change_window_datetime }} {{ change_window_timezone }}"
-        unified_job_template: "Linux // Patching // {{ group.key }}"
+        name: "Dispatcher Schedule => {{ dispatch_workflow }} @ {{ change_window_datetime }} {{ change_window_timezone }}"
+        unified_job_template: "Linux // Patching // {{ dispatch_workflow }}"
         rrule: "{{ query('awx.awx.schedule_rrule', 'none', start_date=change_window_datetime, timezone=change_window_timezone) }}"
-        extra_data: "{{ group.value }}"
+        extra_data: "{{ dispatch_host_metadata }}"
       register: result
-
-    - name: Set stats for demo purposes
-      ansible.builtin.set_stats:
-        data:
-          patch_target_pattern: "{{ patch_targets }}"
-          patch_targets: "{{ hostvars['ledger']['patch_target_hosts'] }}"
-          dispatch_groups: "{{ dispatch_groups }}"
-          change_window_datetime: "{{ change_window_datetime }}"
-          change_window_timezone: "{{ change_window_timezone }}"

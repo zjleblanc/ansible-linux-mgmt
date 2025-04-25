@@ -1,6 +1,6 @@
 ---
 - name: Generic playbook to represent workflow node
-  hosts: "{{ patch_targets }}"
+  hosts: "{{ _hosts }}"
   gather_facts: false
 
   vars:

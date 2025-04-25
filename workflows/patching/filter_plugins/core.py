@@ -2,7 +2,7 @@ class FilterModule(object):
 
     def filters(self):
         return {
-            "group_by_path": self.do_path_determination
+            "determine_path": self.do_path_determination
         }
 
     def do_path_determination(self, dispatch_host_metadata):
