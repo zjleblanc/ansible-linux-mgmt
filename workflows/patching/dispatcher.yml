@@ -20,7 +20,6 @@
   gather_facts: false
 
   vars:
-    ansible_connection: local
     # for testing, override with survey
     change_request: CHG01234 # source from ingress (itsm)
     change_window_timezone: "{{ patch_targets[inventory_hostname]['change_window_timezone'] }}" # America/Chicago
@@ -53,15 +52,18 @@
         mode: "0644"
 
     - name: Get current datetime
+      delegate_to: localhost
       ansible.builtin.set_fact:
         current_datetime: "{{ lookup('pipe', 'TZ=\"' + change_window_timezone + '\" date \"+%Y-%m-%d %H:%M:%S\"') }}"
 
     - name: Assert valid date time for change window
+      delegate_to: localhost
       ansible.builtin.assert:
         that: (change_window_datetime|to_datetime - current_datetime|to_datetime).total_seconds() > 0
         fail_msg: Please ensure that provided date time is in the future
 
     - name: Prep host metadata
+      delegate_to: localhost
       ansible.builtin.set_fact:
         dispatch_host_metadata:
           _hosts: "{{ inventory_hostname }}"
@@ -77,6 +79,7 @@
 
     - name: Create schedule
       register: r_schedule
+      delegate_to: localhost
       ansible.controller.schedule:
         name: "Dispatcher Schedule => {{ dispatch_workflow }} @ {{ change_window_datetime }} {{ change_window_timezone }}"
         unified_job_template: "Linux // Patching // {{ dispatch_workflow }}"
