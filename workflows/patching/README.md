@@ -16,6 +16,25 @@ Mocked example using a Change Request to drive workload scheduling with Ansible 
     - ITSM reconciliation
     - _Error handling pathways_
 
+## Ingress Data Model
+
+```yaml
+change_request: CHG01234
+patch_targets:
+  rhel8-vm-1:
+    change_window_datetime: 2025-04-25 12:30:00
+    change_window_time_zone: America/Chicago
+  rhel8-vm-2:
+    change_window_datetime: 2025-04-25 13:00:00
+    change_window_time_zone: America/Chicago
+  rhel9-vm-1:
+    change_window_datetime: 2025-04-26 12:30:00
+    change_window_time_zone: America/Chicago
+  rhel9-vm-2:
+    change_window_datetime: 2025-04-26 13:00:00
+    change_window_time_zone: America/Chicago
+```
+
 ## High-Level Diagram
 
 ![Workload Dispatcher Diagram](.attachments/workload_dispatcher.png)
