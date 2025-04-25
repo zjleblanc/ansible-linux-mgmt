@@ -15,4 +15,12 @@
 
     - name: Pass data
       ansible.builtin.set_stats:
-        data: "{{ task_output }}"
+        data:
+          action: "{{ task_output['action'] | default('undef') }}"
+          workflow_id: "{{ awx_workflow_job_id | default('undef') }}"
+          workflow_name: "{{ awx_workflow_job_name | default('undef') }}"
+          job_id: "{{ awx_job_id | default('undef') }}"
+          job_template_id: "{{ awx_job_template_id | default('undef') }}"
+          job_template_name: "{{ awx_job_template_name | default('undef') }}"
+          schedule_id: "{{ awx_parent_job_schedule_id | default('undef') }}"
+          schedule_name: "{{ awx_parent_job_schedule_name | default('undef') }}"
