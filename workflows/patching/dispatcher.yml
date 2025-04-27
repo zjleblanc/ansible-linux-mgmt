@@ -89,7 +89,7 @@
     - name: Create job status entry
       tags: [reporting]
       delegate_to: "{{ report_server }}"
-      serial: 1 # avoid parallel writes to same file (for better performance consider assemble)
+      throttle: 1 # avoid parallel writes to same file (for better performance consider assemble)
       ansible.builtin.lineinfile:
         path: "{{ report_web_directory }}/jobs/{{ change_request }}.csv"
         regexp: '^{{ inventory_hostname }},'
