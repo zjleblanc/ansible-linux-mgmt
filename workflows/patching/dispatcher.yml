@@ -60,12 +60,6 @@
         that: (change_window_datetime|to_datetime - current_datetime|to_datetime).total_seconds() > 0
         fail_msg: Please ensure that provided date time is in the future
 
-    - name: Get target workflow job template id
-      ansible.builtin.set_fact:
-        aap_workflow_template_id: "{{ lookup('ansible.controller.controller_api', 'unified_job_templates', query_params={'name': 'Linux // Patching // ' + dispatch_workflow}, expect_one=true) }}"
-
-    - meta: end_play
-
     - name: Prep host metadata
       ansible.builtin.set_fact:
         # Path determination (simple example)
@@ -78,11 +72,20 @@
           change_request: "{{ change_request }}"
           change_window_timezone: "{{ change_window_timezone }}"
           change_window_datetime: "{{ change_window_datetime }}"
+
+    - name: Prep other metadata
+      ansible.builtin.set_fact:
         dispatch_other_data:
           report_server: "{{ report_server }}"
           report_web_directory: "{{ report_web_directory }}"
           report_group: "rhel{{ ansible_distribution_version.replace('.', '_') }}"
           aap_gateway_host: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
+
+    - name: Get target workflow job template id
+      ansible.builtin.set_fact:
+        aap_workflow_template_id: "{{ lookup('ansible.controller.controller_api', 'unified_job_templates', query_params={'name': 'Linux // Patching // ' + dispatch_workflow}, expect_one=true) }}"
+
+    - meta: end_play
 
     # Mostly for demo purposes; keep env clean
     - name: Delete existing schedule
