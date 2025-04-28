@@ -80,12 +80,7 @@
           report_web_directory: "{{ report_web_directory }}"
           report_group: "rhel{{ ansible_distribution_version.replace('.', '_') }}"
           aap_gateway_host: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
-
-    - name: Get target workflow job template id
-      ansible.builtin.set_fact:
-        aap_workflow_template_id: "{{ lookup('ansible.controller.controller_api', 'unified_job_templates', query_params={'name': 'Linux // Patching // ' + dispatch_workflow}, expect_one=true) }}"
-
-    - meta: end_play
+          aap_workflow_template_id: "{{ lookup('ansible.controller.controller_api', 'unified_job_templates', query_params={'name': 'Linux // Patching // ' + dispatch_workflow}, expect_one=true).id }}"
 
     # Mostly for demo purposes; keep env clean
     - name: Delete existing schedule
@@ -108,7 +103,9 @@
       tags: [reporting]
       delegate_to: "{{ report_server }}"
       throttle: 1 # avoid parallel writes to same file (for better performance consider assemble)
+      vars:
+        link_schedule: "<a href='{{ dispatch_other_data['aap_gateway_host'] }}/execution/templates/workflow-job-template/{{ aap_workflow_template_id }}/schedules/{{ r_schedule.id }}/details'>{{ r_schedule.id }}</a>"
       ansible.builtin.lineinfile:
         path: "{{ report_web_directory }}/jobs/{{ change_request }}.csv"
         regexp: '^{{ inventory_hostname }},'
-        line: "{{ inventory_hostname }},{{ dispatch_workflow }},{{ r_schedule.id }},TBD,{{ change_window_datetime }},{{ change_window_timezone }},Scheduled"
+        line: "{{ inventory_hostname }},{{ dispatch_workflow }},{{ link_schedule }},TBD,{{ change_window_datetime }},{{ change_window_timezone }},Scheduled"
