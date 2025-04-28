@@ -39,7 +39,7 @@
           ansible.builtin.lineinfile:
             path: "{{ report_web_directory }}/jobs/{{ change_request }}.csv"
             regexp: '^{{ inventory_hostname }},'
-            line: "{{ inventory_hostname }},{{ dispatch_workflow }},{{ link_schedule }},{{ link_workflow }},{{ change_window_datetime }},{{ change_window_timezone }},{{ report_status_update }}"
+            line: "{{ inventory_hostname }},{{ report_group }},{{ link_schedule }},{{ link_workflow }},{{ change_window_datetime }},{{ change_window_timezone }},{{ report_status_update }}"
 
     - name: Pass data
       ansible.builtin.set_stats:
