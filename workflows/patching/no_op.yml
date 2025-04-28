@@ -27,7 +27,7 @@
       block:
         - name: Build resource links
           ansible.builtin.set_fact:
-            link_schedule: "<a href='{{ aap_gateway_host }}/execution/templates/workflow-job-template/{{ awx_workflow_job_id }}/schedules/{{ awx_parent_job_schedule_id }}/details'>{{ awx_parent_job_schedule_id }}</a>"
+            link_schedule: "<a href='{{ aap_gateway_host }}/execution/templates/workflow-job-template/{{ awx_workflow_job_template_id }}/schedules/{{ awx_parent_job_schedule_id }}/details'>{{ awx_parent_job_schedule_id }}</a>"
             link_workflow: "<a href='{{ aap_gateway_host }}/execution/jobs/workflow/{{ awx_workflow_job_id }}/output'>{{ awx_workflow_job_id }}</a>"
 
         - name: Modify job status report
