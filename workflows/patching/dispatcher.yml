@@ -52,18 +52,15 @@
         mode: "0644"
 
     - name: Get current datetime
-      delegate_to: localhost
       ansible.builtin.set_fact:
         current_datetime: "{{ lookup('pipe', 'TZ=\"' + change_window_timezone + '\" date \"+%Y-%m-%d %H:%M:%S\"') }}"
 
     - name: Assert valid date time for change window
-      delegate_to: localhost
       ansible.builtin.assert:
         that: (change_window_datetime|to_datetime - current_datetime|to_datetime).total_seconds() > 0
         fail_msg: Please ensure that provided date time is in the future
 
     - name: Prep host metadata
-      delegate_to: localhost
       ansible.builtin.set_fact:
         dispatch_host_metadata:
           _hosts: "{{ inventory_hostname }}"
@@ -71,11 +68,14 @@
           kernel: "{{ ansible_kernel }}"
           arch: "{{ ansible_architecture  }}"
           change_request: "{{ change_request }}"
+          change_window_timezone: "{{ change_window_timezone }}"
+          change_window_datetime: "{{ change_window_datetime }}"
         # Path determination (simple example)
         dispatch_workflow: "rhel{{ ansible_distribution_version.replace('.', '_') }}"
         dispatch_other_data:
           report_server: "{{ report_server }}"
           report_web_directory: "{{ report_web_directory }}"
+          aap_gateway_host: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
 
     - name: Create schedule
       register: r_schedule
@@ -84,7 +84,7 @@
         name: "Dispatcher Schedule => {{ dispatch_workflow }} on {{ inventory_hostname }} @ {{ change_window_datetime }} {{ change_window_timezone }}"
         unified_job_template: "Linux // Patching // {{ dispatch_workflow }}"
         rrule: "{{ query('awx.awx.schedule_rrule', 'none', start_date=change_window_datetime, timezone=change_window_timezone) }}"
-        extra_data: "{{ dispatch_host_metadata }}"
+        extra_data: "{{ dispatch_host_metadata | combine(dispatch_other_data) }}"
 
     - name: Create job status entry
       tags: [reporting]

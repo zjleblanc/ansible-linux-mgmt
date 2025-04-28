@@ -7,11 +7,39 @@
     task_purpose: This is a no-op task for demo purposes
     task_output:
       action: generic
+    # report_status_update: Running # Update the report
+    # change_request: CHG01234 # Change request identifier
+
+    # for reporting
+    # report_server: some_host_in_inventory
+    # report_web_directory: /var/www/html
 
   tasks:
     - name: Automation task
       ansible.builtin.debug:
         msg: "{{ task_purpose }}"
+
+    - name: Update job status entry
+      when:
+        - report_status_update is defined
+        - change_request is defined
+      tags: [reporting]
+      block:
+        - name: Build resource links
+          ansible.builtin.set_fact:
+            link_schedule: "<a href='{{ aap_gateway_host }}/execution/templates/workflow-job-template/{{ awx_workflow_job_id }}/schedules/{{ awx_parent_job_schedule_id }}/details'>{{ awx_parent_job_schedule_id }}</a>"
+            link_workflow: "<a href='{{ aap_gateway_host }}/execution/jobs/workflow/{{ awx_workflow_job_id }}/output'>{{ awx_workflow_job_id }}</a>"
+
+        - name: Modify job status report
+          delegate_to: "{{ report_server }}"
+          register: r_status_update
+          retries: 3
+          delay: "{{ 5 | random(seed=inventory_hostname) }}"
+          until: r_status_update is not changed # handle potential race conditions
+          ansible.builtin.lineinfile:
+            path: "{{ report_web_directory }}/jobs/{{ change_request }}.csv"
+            regexp: '^{{ inventory_hostname }},'
+            line: "{{ inventory_hostname }},{{ dispatch_workflow }},{{ link_schedule }},{{ link_workflow }},{{ change_window_datetime }},{{ change_window_timezone }},{{ report_status_update }}"
 
     - name: Pass data
       ansible.builtin.set_stats:

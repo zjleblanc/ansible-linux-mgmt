@@ -44,7 +44,7 @@
 
                   // Create table headers
                   report.data[0].forEach(header => {
-                    $('#report-table-header tr').append($('<th>').text(header));
+                    $('#report-table-header tr').append($('<th>').html(header));
                   });
 
                   // Create table rows
@@ -55,7 +55,7 @@
                     let row = $('<tr>');
                     $('#report-table-body').append(row);
                     record.forEach(val => {
-                      row.append($('<td>').text(val));
+                      row.append($('<td>').html(val));
                     })
                   });
               } catch (error) {
