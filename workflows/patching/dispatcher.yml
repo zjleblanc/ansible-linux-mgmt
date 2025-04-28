@@ -60,6 +60,12 @@
         that: (change_window_datetime|to_datetime - current_datetime|to_datetime).total_seconds() > 0
         fail_msg: Please ensure that provided date time is in the future
 
+    - name: Get target workflow job template id
+      ansible.builtin.set_fact:
+        aap_workflow_template_id: "{{ lookup('ansible.controller.controller_api', 'unified_job_templates', query_params={'name': 'Linux // Patching // ' + dispatch_workflow}, expect_one=true) }}"
+
+    - meta: end_play
+
     - name: Prep host metadata
       ansible.builtin.set_fact:
         # Path determination (simple example)
@@ -85,6 +91,8 @@
         name: "Dispatcher Schedule => {{ dispatch_workflow }} on {{ inventory_hostname }}"
         unified_job_template: "Linux // Patching // {{ dispatch_workflow }}"
         state: absent
+
+    - name: Get workflow
 
     - name: Create schedule
       register: r_schedule
