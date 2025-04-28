@@ -92,8 +92,6 @@
         unified_job_template: "Linux // Patching // {{ dispatch_workflow }}"
         state: absent
 
-    - name: Get workflow
-
     - name: Create schedule
       register: r_schedule
       delegate_to: localhost
