@@ -7,7 +7,7 @@
     - name: Identify DNF changes
       check_mode: true
       ansible.builtin.dnf:
-        name: '*'
+        name: "*"
         state: latest
         update_cache: true
 
@@ -72,7 +72,7 @@
           arch: "{{ ansible_architecture  }}"
           change_request: "{{ change_request }}"
         # Path determination (simple example)
-        dispatch_workflow: "rhel{{ ansible_distribution_version.replace('.', '_') }}"
+        dispatch_workflow: rhel{{ ansible_distribution_version.replace('.', '_') }}
         dispatch_other_data:
           report_server: "{{ report_server }}"
           report_web_directory: "{{ report_web_directory }}"
@@ -81,8 +81,8 @@
       register: r_schedule
       delegate_to: localhost
       ansible.controller.schedule:
-        name: "Dispatcher Schedule => {{ dispatch_workflow }} on {{ inventory_hostname }} @ {{ change_window_datetime }} {{ change_window_timezone }}"
-        unified_job_template: "Linux // Patching // {{ dispatch_workflow }}"
+        name: Dispatcher Schedule => {{ dispatch_workflow }} on {{ inventory_hostname }} @ {{ change_window_datetime }} {{ change_window_timezone }}
+        unified_job_template: Linux // Patching // {{ dispatch_workflow }}
         rrule: "{{ query('awx.awx.schedule_rrule', 'none', start_date=change_window_datetime, timezone=change_window_timezone) }}"
         extra_data: "{{ dispatch_host_metadata }}"
 
@@ -92,5 +92,5 @@
       throttle: 1 # avoid parallel writes to same file (for better performance consider assemble)
       ansible.builtin.lineinfile:
         path: "{{ report_web_directory }}/jobs/{{ change_request }}.csv"
-        regexp: '^{{ inventory_hostname }},'
+        regexp: ^{{ inventory_hostname }},
         line: "{{ inventory_hostname }},{{ dispatch_workflow }},{{ r_schedule.id }},TBD,{{ change_window_datetime }},{{ change_window_timezone }},Scheduled"

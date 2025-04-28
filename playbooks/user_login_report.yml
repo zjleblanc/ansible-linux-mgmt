@@ -1,3 +1,4 @@
+---
 - name: Login random sample of users
   hosts: "{{ _hosts | default(omit)  }}"
   gather_facts: false
@@ -29,7 +30,7 @@
         loop_var: user
       register: r_homedirs
       when: user != 'reboot'
-      ansible.builtin.command: "du --max-depth=1 -h /home/{{ user }}"
+      ansible.builtin.command: du --max-depth=1 -h /home/{{ user }}
 
     - name: Parse homedir data
       ansible.builtin.set_fact:
