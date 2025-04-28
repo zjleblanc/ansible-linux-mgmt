@@ -104,7 +104,7 @@
       delegate_to: "{{ report_server }}"
       throttle: 1 # avoid parallel writes to same file (for better performance consider assemble)
       vars:
-        link_schedule: "<a href='{{ dispatch_other_data['aap_gateway_host'] }}/execution/templates/workflow-job-template/{{ aap_workflow_template_id }}/schedules/{{ r_schedule.id }}/details'>{{ r_schedule.id }}</a>"
+        link_schedule: "<a href='{{ dispatch_other_data.aap_gateway_host }}/execution/templates/workflow-job-template/{{ dispatch_other_data.aap_workflow_template_id }}/schedules/{{ r_schedule.id }}/details'>{{ r_schedule.id }}</a>"
       ansible.builtin.lineinfile:
         path: "{{ report_web_directory }}/jobs/{{ change_request }}.csv"
         regexp: '^{{ inventory_hostname }},'
