@@ -7,7 +7,7 @@
     - name: Identify DNF changes
       check_mode: true
       ansible.builtin.dnf:
-        name: '*'
+        name: "*"
         state: latest
         update_cache: true
 
@@ -63,7 +63,7 @@
     - name: Prep host metadata
       ansible.builtin.set_fact:
         # Path determination (simple example)
-        dispatch_workflow: "rhel{{ ansible_distribution_version.replace('.', '_') }}"
+        dispatch_workflow: rhel{{ ansible_distribution_version.replace('.', '_') }}
         dispatch_host_metadata:
           _hosts: "{{ inventory_hostname }}"
           version: "{{ ansible_distribution_version }}"
@@ -78,24 +78,25 @@
         dispatch_other_data:
           report_server: "{{ report_server }}"
           report_web_directory: "{{ report_web_directory }}"
-          report_group: "rhel{{ ansible_distribution_version.replace('.', '_') }}"
+          report_group: rhel{{ ansible_distribution_version.replace('.', '_') }}
           aap_gateway_host: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
-          aap_workflow_template_id: "{{ lookup('ansible.controller.controller_api', 'unified_job_templates', query_params={'name': 'Linux // Patching // ' + dispatch_workflow}, expect_one=true).id }}"
+          aap_workflow_template_id: "{{ lookup('ansible.controller.controller_api', 'unified_job_templates', query_params={'name': 'Linux // Patching // ' + dispatch_workflow},
+            expect_one=true).id }}"
 
     # Mostly for demo purposes; keep env clean
     - name: Delete existing schedule
       delegate_to: localhost
       ansible.controller.schedule:
-        name: "Dispatcher Schedule => {{ dispatch_workflow }} on {{ inventory_hostname }}"
-        unified_job_template: "Linux // Patching // {{ dispatch_workflow }}"
+        name: Dispatcher Schedule => {{ dispatch_workflow }} on {{ inventory_hostname }}
+        unified_job_template: Linux // Patching // {{ dispatch_workflow }}
         state: absent
 
     - name: Create schedule
       register: r_schedule
       delegate_to: localhost
       ansible.controller.schedule:
-        name: "Dispatcher Schedule => {{ dispatch_workflow }} on {{ inventory_hostname }}"
-        unified_job_template: "Linux // Patching // {{ dispatch_workflow }}"
+        name: Dispatcher Schedule => {{ dispatch_workflow }} on {{ inventory_hostname }}
+        unified_job_template: Linux // Patching // {{ dispatch_workflow }}
         rrule: "{{ query('awx.awx.schedule_rrule', 'none', start_date=change_window_datetime, timezone=change_window_timezone) }}"
         extra_data: "{{ dispatch_host_metadata | combine(dispatch_other_data) }}"
 
@@ -104,8 +105,9 @@
       delegate_to: "{{ report_server }}"
       throttle: 1 # avoid parallel writes to same file (for better performance consider assemble)
       vars:
-        link_schedule: "<a href='{{ dispatch_other_data.aap_gateway_host }}/execution/templates/workflow-job-template/{{ dispatch_other_data.aap_workflow_template_id }}/schedules/{{ r_schedule.id }}/details'>{{ r_schedule.id }}</a>"
+        link_schedule: <a href='{{ dispatch_other_data.aap_gateway_host }}/execution/templates/workflow-job-template/{{ dispatch_other_data.aap_workflow_template_id
+          }}/schedules/{{ r_schedule.id }}/details'>{{ r_schedule.id }}</a>
       ansible.builtin.lineinfile:
         path: "{{ report_web_directory }}/jobs/{{ change_request }}.csv"
-        regexp: '^{{ inventory_hostname }},'
+        regexp: ^{{ inventory_hostname }},
         line: "{{ inventory_hostname }},{{ dispatch_workflow }},{{ link_schedule }},TBD,{{ change_window_datetime }},{{ change_window_timezone }},Scheduled"
