@@ -13,9 +13,8 @@
   tasks:
     - name: Include platform variables
       ansible.builtin.include_vars:
-        file: "vars/{{ target_platform }}_launch_template.yml"
+        file: vars/{{ target_platform }}_launch_template.yml
 
     - name: Setup AWS environment
       ansible.builtin.include_tasks:
         file: tasks/aws.yml
-...
