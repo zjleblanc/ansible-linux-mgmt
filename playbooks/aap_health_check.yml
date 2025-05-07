@@ -6,7 +6,7 @@
 
   tasks:
     - name: Create a new token using username/password
-      ansible.controller.token:
+      awx.awx.token:
         scope: write
         state: present
         controller_host: "{{ controller_fqdn }}"

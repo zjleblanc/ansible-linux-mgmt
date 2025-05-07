@@ -1,616 +1,704 @@
--   duration: 00:00
-    homedir_size: 513M
-    hostname: 192.168.0.37
-    login: '2024-09-06 10:00:24'
-    logout: '2024-09-06 10:00:24'
-    tty: pts/1
-    user: zaustin
--   duration: 00:00
-    homedir_size: 513M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:45'
-    logout: '2024-09-06 09:32:45'
-    tty: pts/0
-    user: zaustin
--   duration: 00:00
-    homedir_size: 513M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:04'
-    logout: '2024-09-06 09:32:05'
-    tty: pts/0
-    user: zaustin
--   duration: 00:00
-    homedir_size: 513M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:04'
-    logout: '2024-09-06 09:32:04'
-    tty: pts/0
-    user: zaustin
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.37
-    login: '2024-09-06 10:01:36'
-    logout: '2024-09-06 10:01:36'
-    tty: pts/1
-    user: tmcgowan
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:50:08'
-    logout: '2024-09-06 09:50:08'
-    tty: pts/1
-    user: tmcgowan
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:40'
-    logout: '2024-09-06 09:32:41'
-    tty: pts/0
-    user: tmcgowan
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:57'
-    logout: '2024-09-06 09:31:57'
-    tty: pts/0
-    user: tmcgowan
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:05'
-    logout: '2024-09-06 09:31:05'
-    tty: pts/0
-    user: tmcgowan
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:29'
-    logout: '2024-09-06 09:30:29'
-    tty: pts/0
-    user: tmcgowan
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:29'
-    logout: '2024-09-06 09:30:29'
-    tty: pts/0
-    user: tmcgowan
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:47'
-    logout: '2024-09-06 09:32:47'
-    tty: pts/0
-    user: tbridges
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:09'
-    logout: '2024-09-06 09:32:09'
-    tty: pts/0
-    user: tbridges
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:08'
-    logout: '2024-09-06 09:32:08'
-    tty: pts/0
-    user: tbridges
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.37
-    login: '2024-09-06 09:55:27'
-    logout: '2024-09-06 09:55:27'
-    tty: pts/1
-    user: plangley
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:33'
-    logout: '2024-09-06 09:32:33'
-    tty: pts/0
-    user: plangley
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:50'
-    logout: '2024-09-06 09:31:51'
-    tty: pts/0
-    user: plangley
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:58'
-    logout: '2024-09-06 09:30:58'
-    tty: pts/0
-    user: plangley
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:16'
-    logout: '2024-09-06 09:30:17'
-    tty: pts/0
-    user: plangley
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:16'
-    logout: '2024-09-06 09:30:16'
-    tty: pts/0
-    user: plangley
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:37'
-    logout: '2024-09-06 09:32:37'
-    tty: pts/0
-    user: nramos
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:54'
-    logout: '2024-09-06 09:31:54'
-    tty: pts/0
-    user: nramos
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:01'
-    logout: '2024-09-06 09:31:01'
-    tty: pts/0
-    user: nramos
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:23'
-    logout: '2024-09-06 09:30:23'
-    tty: pts/0
-    user: nramos
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:23'
-    logout: '2024-09-06 09:30:23'
-    tty: pts/0
-    user: nramos
--   duration: 00:00
-    homedir_size: 1.1M
-    hostname: 192.168.0.37
-    login: '2024-09-06 10:00:09'
-    logout: '2024-09-06 10:00:09'
-    tty: pts/1
-    user: msears
--   duration: 00:00
-    homedir_size: 1.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:50:06'
-    logout: '2024-09-06 09:50:07'
-    tty: pts/1
-    user: msears
--   duration: 00:00
-    homedir_size: 1.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:33:02'
-    logout: '2024-09-06 09:33:02'
-    tty: pts/1
-    user: msears
--   duration: 00:00
-    homedir_size: 1.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:33:02'
-    logout: '2024-09-06 09:33:02'
-    tty: pts/1
-    user: msears
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:51'
-    logout: '2024-09-06 09:32:51'
-    tty: pts/0
-    user: msantangel
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:50'
-    logout: '2024-09-06 09:32:50'
-    tty: pts/0
-    user: msantangel
--   duration: 00:00
-    homedir_size: 513M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:53'
-    logout: '2024-09-06 09:32:53'
-    tty: pts/0
-    user: lpareja
--   duration: 00:00
-    homedir_size: 513M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:53'
-    logout: '2024-09-06 09:32:53'
-    tty: pts/0
-    user: lpareja
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.37
-    login: '2024-09-06 10:01:38'
-    logout: '2024-09-06 10:01:38'
-    tty: pts/1
-    user: lgill
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.37
-    login: '2024-09-06 10:00:43'
-    logout: '2024-09-06 10:00:43'
-    tty: pts/1
-    user: lgill
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:49:50'
-    logout: '2024-09-06 09:49:50'
-    tty: pts/1
-    user: lgill
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:34'
-    logout: '2024-09-06 09:32:34'
-    tty: pts/0
-    user: lgill
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:51'
-    logout: '2024-09-06 09:31:52'
-    tty: pts/0
-    user: lgill
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:59'
-    logout: '2024-09-06 09:30:59'
-    tty: pts/0
-    user: lgill
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:19'
-    logout: '2024-09-06 09:30:19'
-    tty: pts/0
-    user: lgill
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:18'
-    logout: '2024-09-06 09:30:18'
-    tty: pts/0
-    user: lgill
--   duration: 00:00
-    homedir_size: 2.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:42'
-    logout: '2024-09-06 09:32:43'
-    tty: pts/0
-    user: kmueller
--   duration: 00:00
-    homedir_size: 2.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:00'
-    logout: '2024-09-06 09:32:00'
-    tty: pts/0
-    user: kmueller
--   duration: 00:00
-    homedir_size: 2.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:00'
-    logout: '2024-09-06 09:32:00'
-    tty: pts/0
-    user: kmueller
--   duration: 00:00
-    homedir_size: 8.1M
-    hostname: 192.168.0.37
-    login: '2024-09-06 10:01:37'
-    logout: '2024-09-06 10:01:37'
-    tty: pts/1
-    user: kgisbert
--   duration: 00:00
-    homedir_size: 8.1M
-    hostname: 192.168.0.37
-    login: '2024-09-06 10:00:08'
-    logout: '2024-09-06 10:00:08'
-    tty: pts/1
-    user: kgisbert
--   duration: 00:00
-    homedir_size: 8.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:50:05'
-    logout: '2024-09-06 09:50:06'
-    tty: pts/1
-    user: kgisbert
--   duration: 00:00
-    homedir_size: 8.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:58'
-    logout: '2024-09-06 09:32:58'
-    tty: pts/1
-    user: kgisbert
--   duration: 00:00
-    homedir_size: 8.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:58'
-    logout: '2024-09-06 09:32:58'
-    tty: pts/1
-    user: kgisbert
--   duration: 00:00
-    homedir_size: 513M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:39'
-    logout: '2024-09-06 09:32:39'
-    tty: pts/0
-    user: jwoodward
--   duration: 00:00
-    homedir_size: 513M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:56'
-    logout: '2024-09-06 09:31:56'
-    tty: pts/0
-    user: jwoodward
--   duration: 00:00
-    homedir_size: 513M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:03'
-    logout: '2024-09-06 09:31:04'
-    tty: pts/0
-    user: jwoodward
--   duration: 00:00
-    homedir_size: 513M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:27'
-    logout: '2024-09-06 09:30:27'
-    tty: pts/0
-    user: jwoodward
--   duration: 00:00
-    homedir_size: 513M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:27'
-    logout: '2024-09-06 09:30:27'
-    tty: pts/0
-    user: jwoodward
--   duration: 00:00
-    homedir_size: 524K
-    hostname: 192.168.0.37
-    login: '2024-09-06 10:00:42'
-    logout: '2024-09-06 10:00:42'
-    tty: pts/1
-    user: jdawson
--   duration: 00:00
-    homedir_size: 524K
-    hostname: 192.168.0.37
-    login: '2024-09-06 10:00:26'
-    logout: '2024-09-06 10:00:26'
-    tty: pts/1
-    user: jdawson
--   duration: 00:00
-    homedir_size: 524K
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:46'
-    logout: '2024-09-06 09:32:46'
-    tty: pts/0
-    user: jdawson
--   duration: 00:00
-    homedir_size: 524K
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:07'
-    logout: '2024-09-06 09:32:07'
-    tty: pts/0
-    user: jdawson
--   duration: 00:00
-    homedir_size: 524K
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:06'
-    logout: '2024-09-06 09:32:06'
-    tty: pts/0
-    user: jdawson
--   duration: 00:00
-    homedir_size: 2.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:33:00'
-    logout: '2024-09-06 09:33:00'
-    tty: pts/1
-    user: jconner
--   duration: 00:00
-    homedir_size: 2.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:33:00'
-    logout: '2024-09-06 09:33:00'
-    tty: pts/1
-    user: jconner
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.37
-    login: '2024-09-06 09:55:28'
-    logout: '2024-09-06 09:55:28'
-    tty: pts/1
-    user: jcarroll
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:38'
-    logout: '2024-09-06 09:32:38'
-    tty: pts/0
-    user: jcarroll
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:55'
-    logout: '2024-09-06 09:31:55'
-    tty: pts/0
-    user: jcarroll
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:02'
-    logout: '2024-09-06 09:31:03'
-    tty: pts/0
-    user: jcarroll
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:25'
-    logout: '2024-09-06 09:30:25'
-    tty: pts/0
-    user: jcarroll
--   duration: 00:00
-    homedir_size: 65M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:25'
-    logout: '2024-09-06 09:30:25'
-    tty: pts/0
-    user: jcarroll
--   duration: 00:00
-    homedir_size: 12K
-    hostname: 192.168.0.37
-    login: '2024-09-06 10:00:41'
-    logout: '2024-09-06 10:00:41'
-    tty: pts/1
-    user: jabellan
--   duration: 00:00
-    homedir_size: 12K
-    hostname: 192.168.0.37
-    login: '2024-09-06 10:00:25'
-    logout: '2024-09-06 10:00:25'
-    tty: pts/1
-    user: jabellan
--   duration: 00:00
-    homedir_size: 12K
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:41'
-    logout: '2024-09-06 09:32:42'
-    tty: pts/0
-    user: jabellan
--   duration: 00:00
-    homedir_size: 12K
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:58'
-    logout: '2024-09-06 09:31:58'
-    tty: pts/0
-    user: jabellan
--   duration: 00:00
-    homedir_size: 12K
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:07'
-    logout: '2024-09-06 09:31:07'
-    tty: pts/0
-    user: jabellan
--   duration: 00:00
-    homedir_size: 12K
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:07'
-    logout: '2024-09-06 09:31:07'
-    tty: pts/0
-    user: jabellan
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.37
-    login: '2024-09-06 10:00:07'
-    logout: '2024-09-06 10:00:07'
-    tty: pts/1
-    user: gmooney
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.37
-    login: '2024-09-06 09:55:29'
-    logout: '2024-09-06 09:55:29'
-    tty: pts/1
-    user: gmooney
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:56'
-    logout: '2024-09-06 09:32:56'
-    tty: pts/1
-    user: gmooney
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:55'
-    logout: '2024-09-06 09:32:55'
-    tty: pts/1
-    user: gmooney
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:43'
-    logout: '2024-09-06 09:32:44'
-    tty: pts/0
-    user: cknowles
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:02'
-    logout: '2024-09-06 09:32:02'
-    tty: pts/0
-    user: cknowles
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:02'
-    logout: '2024-09-06 09:32:02'
-    tty: pts/0
-    user: cknowles
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:35'
-    logout: '2024-09-06 09:32:36'
-    tty: pts/0
-    user: awatkins
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:53'
-    logout: '2024-09-06 09:31:53'
-    tty: pts/0
-    user: awatkins
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:31:00'
-    logout: '2024-09-06 09:31:00'
-    tty: pts/0
-    user: awatkins
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:21'
-    logout: '2024-09-06 09:30:21'
-    tty: pts/0
-    user: awatkins
--   duration: 00:00
-    homedir_size: 129M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:30:21'
-    logout: '2024-09-06 09:30:21'
-    tty: pts/0
-    user: awatkins
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:48'
-    logout: '2024-09-06 09:32:48'
-    tty: pts/0
-    user: afernandino
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:11'
-    logout: '2024-09-06 09:32:11'
-    tty: pts/0
-    user: afernandino
--   duration: 00:00
-    homedir_size: 4.1M
-    hostname: 192.168.0.203
-    login: '2024-09-06 09:32:11'
-    logout: '2024-09-06 09:32:11'
-    tty: pts/0
-    user: afernandino
+---
+- duration: "00:00"
+  homedir_size: 513M
+  login: "2024-09-06 10:00:24"
+  logout: "2024-09-06 10:00:24"
+  tty: pts/1
+  user: zaustin
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 513M
+  login: "2024-09-06 09:32:45"
+  logout: "2024-09-06 09:32:45"
+  tty: pts/0
+  user: zaustin
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 513M
+  login: "2024-09-06 09:32:04"
+  logout: "2024-09-06 09:32:05"
+  tty: pts/0
+  user: zaustin
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 513M
+  login: "2024-09-06 09:32:04"
+  logout: "2024-09-06 09:32:04"
+  tty: pts/0
+  user: zaustin
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 10:01:36"
+  logout: "2024-09-06 10:01:36"
+  tty: pts/1
+  user: tmcgowan
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:50:08"
+  logout: "2024-09-06 09:50:08"
+  tty: pts/1
+  user: tmcgowan
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:32:40"
+  logout: "2024-09-06 09:32:41"
+  tty: pts/0
+  user: tmcgowan
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:31:57"
+  logout: "2024-09-06 09:31:57"
+  tty: pts/0
+  user: tmcgowan
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:31:05"
+  logout: "2024-09-06 09:31:05"
+  tty: pts/0
+  user: tmcgowan
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:30:29"
+  logout: "2024-09-06 09:30:29"
+  tty: pts/0
+  user: tmcgowan
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:30:29"
+  logout: "2024-09-06 09:30:29"
+  tty: pts/0
+  user: tmcgowan
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:32:47"
+  logout: "2024-09-06 09:32:47"
+  tty: pts/0
+  user: tbridges
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:32:09"
+  logout: "2024-09-06 09:32:09"
+  tty: pts/0
+  user: tbridges
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:32:08"
+  logout: "2024-09-06 09:32:08"
+  tty: pts/0
+  user: tbridges
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:55:27"
+  logout: "2024-09-06 09:55:27"
+  tty: pts/1
+  user: plangley
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:32:33"
+  logout: "2024-09-06 09:32:33"
+  tty: pts/0
+  user: plangley
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:31:50"
+  logout: "2024-09-06 09:31:51"
+  tty: pts/0
+  user: plangley
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:30:58"
+  logout: "2024-09-06 09:30:58"
+  tty: pts/0
+  user: plangley
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:30:16"
+  logout: "2024-09-06 09:30:17"
+  tty: pts/0
+  user: plangley
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:30:16"
+  logout: "2024-09-06 09:30:16"
+  tty: pts/0
+  user: plangley
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:32:37"
+  logout: "2024-09-06 09:32:37"
+  tty: pts/0
+  user: nramos
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:31:54"
+  logout: "2024-09-06 09:31:54"
+  tty: pts/0
+  user: nramos
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:31:01"
+  logout: "2024-09-06 09:31:01"
+  tty: pts/0
+  user: nramos
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:30:23"
+  logout: "2024-09-06 09:30:23"
+  tty: pts/0
+  user: nramos
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:30:23"
+  logout: "2024-09-06 09:30:23"
+  tty: pts/0
+  user: nramos
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 1.1M
+  login: "2024-09-06 10:00:09"
+  logout: "2024-09-06 10:00:09"
+  tty: pts/1
+  user: msears
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 1.1M
+  login: "2024-09-06 09:50:06"
+  logout: "2024-09-06 09:50:07"
+  tty: pts/1
+  user: msears
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 1.1M
+  login: "2024-09-06 09:33:02"
+  logout: "2024-09-06 09:33:02"
+  tty: pts/1
+  user: msears
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 1.1M
+  login: "2024-09-06 09:33:02"
+  logout: "2024-09-06 09:33:02"
+  tty: pts/1
+  user: msears
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:32:51"
+  logout: "2024-09-06 09:32:51"
+  tty: pts/0
+  user: msantangel
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:32:50"
+  logout: "2024-09-06 09:32:50"
+  tty: pts/0
+  user: msantangel
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 513M
+  login: "2024-09-06 09:32:53"
+  logout: "2024-09-06 09:32:53"
+  tty: pts/0
+  user: lpareja
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 513M
+  login: "2024-09-06 09:32:53"
+  logout: "2024-09-06 09:32:53"
+  tty: pts/0
+  user: lpareja
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 10:01:38"
+  logout: "2024-09-06 10:01:38"
+  tty: pts/1
+  user: lgill
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 10:00:43"
+  logout: "2024-09-06 10:00:43"
+  tty: pts/1
+  user: lgill
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:49:50"
+  logout: "2024-09-06 09:49:50"
+  tty: pts/1
+  user: lgill
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:32:34"
+  logout: "2024-09-06 09:32:34"
+  tty: pts/0
+  user: lgill
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:31:51"
+  logout: "2024-09-06 09:31:52"
+  tty: pts/0
+  user: lgill
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:30:59"
+  logout: "2024-09-06 09:30:59"
+  tty: pts/0
+  user: lgill
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:30:19"
+  logout: "2024-09-06 09:30:19"
+  tty: pts/0
+  user: lgill
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:30:18"
+  logout: "2024-09-06 09:30:18"
+  tty: pts/0
+  user: lgill
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 2.1M
+  login: "2024-09-06 09:32:42"
+  logout: "2024-09-06 09:32:43"
+  tty: pts/0
+  user: kmueller
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 2.1M
+  login: "2024-09-06 09:32:00"
+  logout: "2024-09-06 09:32:00"
+  tty: pts/0
+  user: kmueller
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 2.1M
+  login: "2024-09-06 09:32:00"
+  logout: "2024-09-06 09:32:00"
+  tty: pts/0
+  user: kmueller
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 8.1M
+  login: "2024-09-06 10:01:37"
+  logout: "2024-09-06 10:01:37"
+  tty: pts/1
+  user: kgisbert
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 8.1M
+  login: "2024-09-06 10:00:08"
+  logout: "2024-09-06 10:00:08"
+  tty: pts/1
+  user: kgisbert
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 8.1M
+  login: "2024-09-06 09:50:05"
+  logout: "2024-09-06 09:50:06"
+  tty: pts/1
+  user: kgisbert
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 8.1M
+  login: "2024-09-06 09:32:58"
+  logout: "2024-09-06 09:32:58"
+  tty: pts/1
+  user: kgisbert
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 8.1M
+  login: "2024-09-06 09:32:58"
+  logout: "2024-09-06 09:32:58"
+  tty: pts/1
+  user: kgisbert
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 513M
+  login: "2024-09-06 09:32:39"
+  logout: "2024-09-06 09:32:39"
+  tty: pts/0
+  user: jwoodward
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 513M
+  login: "2024-09-06 09:31:56"
+  logout: "2024-09-06 09:31:56"
+  tty: pts/0
+  user: jwoodward
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 513M
+  login: "2024-09-06 09:31:03"
+  logout: "2024-09-06 09:31:04"
+  tty: pts/0
+  user: jwoodward
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 513M
+  login: "2024-09-06 09:30:27"
+  logout: "2024-09-06 09:30:27"
+  tty: pts/0
+  user: jwoodward
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 513M
+  login: "2024-09-06 09:30:27"
+  logout: "2024-09-06 09:30:27"
+  tty: pts/0
+  user: jwoodward
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 524K
+  login: "2024-09-06 10:00:42"
+  logout: "2024-09-06 10:00:42"
+  tty: pts/1
+  user: jdawson
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 524K
+  login: "2024-09-06 10:00:26"
+  logout: "2024-09-06 10:00:26"
+  tty: pts/1
+  user: jdawson
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 524K
+  login: "2024-09-06 09:32:46"
+  logout: "2024-09-06 09:32:46"
+  tty: pts/0
+  user: jdawson
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 524K
+  login: "2024-09-06 09:32:07"
+  logout: "2024-09-06 09:32:07"
+  tty: pts/0
+  user: jdawson
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 524K
+  login: "2024-09-06 09:32:06"
+  logout: "2024-09-06 09:32:06"
+  tty: pts/0
+  user: jdawson
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 2.1M
+  login: "2024-09-06 09:33:00"
+  logout: "2024-09-06 09:33:00"
+  tty: pts/1
+  user: jconner
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 2.1M
+  login: "2024-09-06 09:33:00"
+  logout: "2024-09-06 09:33:00"
+  tty: pts/1
+  user: jconner
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:55:28"
+  logout: "2024-09-06 09:55:28"
+  tty: pts/1
+  user: jcarroll
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:32:38"
+  logout: "2024-09-06 09:32:38"
+  tty: pts/0
+  user: jcarroll
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:31:55"
+  logout: "2024-09-06 09:31:55"
+  tty: pts/0
+  user: jcarroll
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:31:02"
+  logout: "2024-09-06 09:31:03"
+  tty: pts/0
+  user: jcarroll
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:30:25"
+  logout: "2024-09-06 09:30:25"
+  tty: pts/0
+  user: jcarroll
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 65M
+  login: "2024-09-06 09:30:25"
+  logout: "2024-09-06 09:30:25"
+  tty: pts/0
+  user: jcarroll
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 12K
+  login: "2024-09-06 10:00:41"
+  logout: "2024-09-06 10:00:41"
+  tty: pts/1
+  user: jabellan
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 12K
+  login: "2024-09-06 10:00:25"
+  logout: "2024-09-06 10:00:25"
+  tty: pts/1
+  user: jabellan
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 12K
+  login: "2024-09-06 09:32:41"
+  logout: "2024-09-06 09:32:42"
+  tty: pts/0
+  user: jabellan
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 12K
+  login: "2024-09-06 09:31:58"
+  logout: "2024-09-06 09:31:58"
+  tty: pts/0
+  user: jabellan
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 12K
+  login: "2024-09-06 09:31:07"
+  logout: "2024-09-06 09:31:07"
+  tty: pts/0
+  user: jabellan
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 12K
+  login: "2024-09-06 09:31:07"
+  logout: "2024-09-06 09:31:07"
+  tty: pts/0
+  user: jabellan
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 10:00:07"
+  logout: "2024-09-06 10:00:07"
+  tty: pts/1
+  user: gmooney
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:55:29"
+  logout: "2024-09-06 09:55:29"
+  tty: pts/1
+  user: gmooney
+  ansible.builtin.hostname: 192.168.0.37
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:32:56"
+  logout: "2024-09-06 09:32:56"
+  tty: pts/1
+  user: gmooney
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:32:55"
+  logout: "2024-09-06 09:32:55"
+  tty: pts/1
+  user: gmooney
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:32:43"
+  logout: "2024-09-06 09:32:44"
+  tty: pts/0
+  user: cknowles
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:32:02"
+  logout: "2024-09-06 09:32:02"
+  tty: pts/0
+  user: cknowles
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:32:02"
+  logout: "2024-09-06 09:32:02"
+  tty: pts/0
+  user: cknowles
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:32:35"
+  logout: "2024-09-06 09:32:36"
+  tty: pts/0
+  user: awatkins
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:31:53"
+  logout: "2024-09-06 09:31:53"
+  tty: pts/0
+  user: awatkins
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:31:00"
+  logout: "2024-09-06 09:31:00"
+  tty: pts/0
+  user: awatkins
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:30:21"
+  logout: "2024-09-06 09:30:21"
+  tty: pts/0
+  user: awatkins
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 129M
+  login: "2024-09-06 09:30:21"
+  logout: "2024-09-06 09:30:21"
+  tty: pts/0
+  user: awatkins
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:32:48"
+  logout: "2024-09-06 09:32:48"
+  tty: pts/0
+  user: afernandino
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:32:11"
+  logout: "2024-09-06 09:32:11"
+  tty: pts/0
+  user: afernandino
+  ansible.builtin.hostname: 192.168.0.203
+
+- duration: "00:00"
+  homedir_size: 4.1M
+  login: "2024-09-06 09:32:11"
+  logout: "2024-09-06 09:32:11"
+  tty: pts/0
+  user: afernandino
+  ansible.builtin.hostname: 192.168.0.203
