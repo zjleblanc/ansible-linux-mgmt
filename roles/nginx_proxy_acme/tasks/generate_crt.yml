@@ -20,7 +20,7 @@
     acme_version: "{{ acme_version }}"
     account_key_src: "{{ acme_letsencrypt_account_key }}"
     account_email: "{{ acme_email }}"
-    terms_agreed: 1
+    terms_agreed: true
     challenge: "{{ acme_challenge_type }}"
     csr: "{{ acme_letsencrypt_csrs_dir }}/{{ acme_domain_name }}.csr"
     dest: "{{ acme_letsencrypt_certs_dir }}/{{ acme_domain_name }}.pem"
