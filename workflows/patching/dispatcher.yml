@@ -1,6 +1,6 @@
 ---
 - name: Pre-process patch targets and dispatch jobs
-  hosts: "{{ patch_targets.keys() | default(omit) }}"
+  hosts: "{{ patch_targets | default(omit) }}"
   become: true
 
   tasks:
@@ -15,7 +15,7 @@
       ansible.builtin.service_facts:
 
 - name: Dispatch schedules for downstream workflow
-  hosts: "{{ patch_targets.keys() | default(omit) }}"
+  hosts: "{{ patch_targets | default(omit) }}"
   become: false
   gather_facts: false
 
@@ -23,8 +23,8 @@
     # for testing, override with survey
     change_request: CHG01234 # source from ingress (itsm)
     schedule_group_label: "sched_{{ change_request }}"
-    change_window_timezone: "{{ patch_targets[inventory_hostname]['change_window_timezone'] }}" # America/Chicago
-    change_window_datetime: "{{ patch_targets[inventory_hostname]['change_window_datetime'] }}" # "2025-04-11 11:10:00"
+    # change_window_timezone: "{{ patch_targets[inventory_hostname]['change_window_timezone'] }}" # America/Chicago
+    # change_window_datetime: "{{ patch_targets[inventory_hostname]['change_window_datetime'] }}" # "2025-04-11 11:10:00"
     # for reporting
     # report_server: some_host_in_inventory
     # report_web_directory: /var/www/html
