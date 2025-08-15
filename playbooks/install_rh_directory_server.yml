@@ -1,0 +1,16 @@
+---
+- name: Install Red Hat Directory Server
+  hosts: "{{ _host | default('ldap') }}"
+  become: true
+
+  vars_files:
+    - vars/ldap_secrets.yml
+
+  roles:
+    - name: redhat_directory_server
+      vars:
+        ldap_instance_name: ldap-autodotes
+        # ldap_admin_password: from-vault
+        ldap_db_lib: mdb
+        ldap_suffix_entry: True
+        ldap_suffix: dc=autodotes,dc=com

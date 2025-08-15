@@ -1,0 +1,67 @@
+---
+# tasks file for roles/redhat_directory_server
+- name: enable repo
+  community.general.rhsm_repository:
+    name: dirsrv-12-for-rhel-9-x86_64-rpms
+    state: enabled
+
+- name: enable directory services module
+  register: r_module_enable
+  ansible.builtin.command: dnf module enable redhat-ds:12 -y
+  changed_when: r_module_enable.stdout is not search("Nothing to do")
+
+- name: install directory services
+  ansible.builtin.dnf:
+    name:
+      - 389-ds-base
+      - cockpit-389-ds
+    state: installed
+
+- name: template ds inf config
+  ansible.builtin.template:
+    src: instance.inf.j2
+    dest: "/root/{{ ldap_instance_name }}.inf"
+    owner: root
+    group: root
+    mode: "0600"
+
+- name: create ds instance from tempalte
+  register: r_ds_create
+  ansible.builtin.command: "dscreate from-file /root/{{ ldap_instance_name }}.inf"
+  failed_when:
+    - r_ds_create.rc > 0
+    - r_ds_create.stderr is not search("may already exist")
+
+- name: Seed directory from ldif
+  when: ldap_users_ldif is defined
+  block:
+    - name: copy ldif
+      ansible.builtin.copy:
+        content: "{{ ldap_users_ldif }}"
+        dest: "/var/lib/dirsrv/slapd-{{ ldap_instance_name }}/ldif/seed.ldif"
+
+    - name: restore selinux context
+      ansible.builtin.command: "restorecon -Rv /var/lib/dirsrv/slapd-{{ ldap_instance_name }}/ldif/seed.ldif"
+
+    - name: import ldif
+      ansible.builtin.command: >-
+        dsconf -D "cn=Directory Manager" -w "{{ ldap_admin_password }}"
+        ldap://{{ ansible_hostname }} backend import userRoot
+        /var/lib/dirsrv/slapd-{{ ldap_instance_name }}/ldif/seed.ldif
+
+- name: start cockpit
+  ansible.builtin.service:
+    name: cockpit
+    state: started
+    enabled: true
+
+- name: configure firewall rules
+  loop:
+    - port: 389/tcp
+    - port: 636/tcp
+    - service: cockpit # cockpit
+  ansible.posix.firewalld:
+    port: "{{ item.port | default(omit) }}"
+    service: "{{ item.service | default(omit) }}"
+    permanent: true
+    state: enabled
