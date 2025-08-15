@@ -22,6 +22,7 @@
   vars:
     # for testing, override with survey
     change_request: CHG01234 # source from ingress (itsm)
+    schedule_group_label: "sched_{{ change_request }}"
     change_window_timezone: "{{ patch_targets[inventory_hostname]['change_window_timezone'] }}" # America/Chicago
     change_window_datetime: "{{ patch_targets[inventory_hostname]['change_window_datetime'] }}" # "2025-04-11 11:10:00"
     # for reporting
@@ -90,11 +91,21 @@
         unified_job_template: "Linux // Patching // {{ dispatch_workflow }}"
         state: absent
 
+    - name: Create label
+      register: r_label
+      delegate_to: localhost
+      ansible.controller.label:
+        name: "{{ schedule_group_label }}"
+        organization: Autodotes
+
     - name: Create schedule
       register: r_schedule
       delegate_to: localhost
       ansible.controller.schedule:
         name: "Dispatcher Schedule => {{ dispatch_workflow }} on {{ inventory_hostname }}"
+        organization: Autodotes
+        labels:
+          - "{{ schedule_group_label }}"
         unified_job_template: "Linux // Patching // {{ dispatch_workflow }}"
         rrule: "{{ query('awx.awx.schedule_rrule', 'none', start_date=change_window_datetime, timezone=change_window_timezone) }}"
         extra_data: "{{ dispatch_host_metadata | combine(dispatch_other_data) }}"
