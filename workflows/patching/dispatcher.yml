@@ -23,7 +23,7 @@
     # for testing, override with survey
     change_request: CHG01234 # source from ingress (itsm)
     schedule_group_label: "sched_{{ change_request }}"
-    change_window_timezone: "{{ patch_targets[inventory_hostname]['change_window_timezone'] }}" # America/Chicago
+    change_window_timezone: "{{ patch_targets[inventory_hostname]['change_window_timezone'] | default('America/Chicago') }}" # America/Chicago
     change_window_datetime: "{{ patch_targets[inventory_hostname]['change_window_datetime'] }}" # "2025-04-11 11:10:00"
     # for reporting
     # report_server: some_host_in_inventory
@@ -34,6 +34,7 @@
       tags: [reporting]
       delegate_to: "{{ report_server }}"
       run_once: true
+      become: true
       ansible.builtin.template:
         src: templates/report.html.j2
         dest: "{{ report_web_directory }}/{{ change_request }}.html"
@@ -45,6 +46,7 @@
       tags: [reporting]
       delegate_to: "{{ report_server }}"
       run_once: true
+      become: true
       ansible.builtin.template:
         src: templates/jobs.csv.j2
         dest: "{{ report_web_directory }}/jobs/{{ change_request }}.csv"
@@ -113,6 +115,7 @@
     - name: Create job status entry
       tags: [reporting]
       delegate_to: "{{ report_server }}"
+      become: true
       throttle: 1 # avoid parallel writes to same file (for better performance consider assemble)
       vars:
         link_schedule: "<a href='{{ dispatch_other_data.aap_gateway_host }}/execution/templates/workflow-job-template/{{ dispatch_other_data.aap_workflow_template_id }}/schedules/{{ r_schedule.id }}/details'>{{ r_schedule.id }}</a>"
