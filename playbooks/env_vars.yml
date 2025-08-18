@@ -20,5 +20,5 @@
 
     - name: List callback plugins
       when: ansible_os_family|lower == 'windows'
-      ansible.builtin.win_find:
+      ansible.windows.win_find:
         paths: "{{ lookup('env', 'ANSIBLE_CALLBACK_PLUGINS') }}"

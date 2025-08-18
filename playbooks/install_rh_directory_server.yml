@@ -12,5 +12,5 @@
         ldap_instance_name: ldap-autodotes
         # ldap_admin_password: from-vault
         ldap_db_lib: mdb
-        ldap_suffix_entry: True
+        ldap_suffix_entry: true
         ldap_suffix: dc=autodotes,dc=com
