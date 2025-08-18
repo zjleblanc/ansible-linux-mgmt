@@ -2,5 +2,5 @@
 ldap_db_lib: bdb
 ldap_instance_name: localhost
 ldap_db_max_size: "12792253644.800001"
-ldap_suffix_entry: False
+ldap_suffix_entry: false
 ldap_suffix: ""

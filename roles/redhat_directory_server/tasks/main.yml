@@ -20,14 +20,14 @@
 - name: template ds inf config
   ansible.builtin.template:
     src: instance.inf.j2
-    dest: "/root/{{ ldap_instance_name }}.inf"
+    dest: /root/{{ ldap_instance_name }}.inf
     owner: root
     group: root
     mode: "0600"
 
 - name: create ds instance from tempalte
   register: r_ds_create
-  ansible.builtin.command: "dscreate from-file /root/{{ ldap_instance_name }}.inf"
+  ansible.builtin.command: dscreate from-file /root/{{ ldap_instance_name }}.inf
   failed_when:
     - r_ds_create.rc > 0
     - r_ds_create.stderr is not search("may already exist")
@@ -38,10 +38,10 @@
     - name: copy ldif
       ansible.builtin.copy:
         content: "{{ ldap_users_ldif }}"
-        dest: "/var/lib/dirsrv/slapd-{{ ldap_instance_name }}/ldif/seed.ldif"
+        dest: /var/lib/dirsrv/slapd-{{ ldap_instance_name }}/ldif/seed.ldif
 
     - name: restore selinux context
-      ansible.builtin.command: "restorecon -Rv /var/lib/dirsrv/slapd-{{ ldap_instance_name }}/ldif/seed.ldif"
+      ansible.builtin.command: restorecon -Rv /var/lib/dirsrv/slapd-{{ ldap_instance_name }}/ldif/seed.ldif
 
     - name: import ldif
       ansible.builtin.command: >-
