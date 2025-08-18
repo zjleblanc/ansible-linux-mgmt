@@ -96,7 +96,7 @@
       register: r_label
       delegate_to: localhost
       ansible.controller.label:
-        name: "{{ schedule_group_label }}"
+        name: "{{ change_request }}"
         organization: Autodotes
         state: exists
 
