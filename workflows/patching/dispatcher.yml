@@ -98,7 +98,10 @@
       ansible.controller.label:
         name: "{{ change_request }}"
         organization: Autodotes
-        state: exists
+        state: present
+      failed_when:
+        - r_label is failed
+        - r_label.msg | default('') is not search('already exists')
 
     - name: Create schedule
       register: r_schedule
