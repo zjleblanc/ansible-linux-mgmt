@@ -85,6 +85,8 @@
       delegate_to: "{{ report_server }}"
       run_once: true
       become: true
+      vars:
+        change_request: "{{ r_chg_req.record.number }}"
       ansible.builtin.template:
         src: templates/report.html.j2
         dest: "{{ report_web_directory }}/{{ r_chg_req.record.number }}.html"
