@@ -38,7 +38,7 @@
         number: "{{ change_request_task }}"
         state: closed
         close_code: unsuccessful
-        close_notes: "Automated patching succeeded: {{ awx_job_template_name }} (id: {{ awx_job_id }})"
+        close_notes: "Automated patching failed: {{ awx_job_template_name }} (id: {{ awx_job_id }})"
 
     - name: Update job status entry
       when:
