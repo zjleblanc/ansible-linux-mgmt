@@ -21,7 +21,7 @@
         msg: "{{ task_purpose }}"
 
     - name: Close a change task | successful
-      when: action == 'close_ctask'
+      when: task_output.action == 'close_ctask'
       tags: snow
       delegate_to: localhost
       servicenow.itsm.change_request_task:
@@ -31,7 +31,7 @@
         close_notes: "Automated patching succeeded: {{ awx_job_template_name }} (id: {{ awx_job_id }})"
 
     - name: Update a change task | unsuccessful
-      when: action == 'update_ctask'
+      when: task_output.action == 'update_ctask'
       tags: snow
       delegate_to: localhost
       servicenow.itsm.change_request_task:
