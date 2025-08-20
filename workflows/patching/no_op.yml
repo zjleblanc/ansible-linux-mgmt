@@ -9,6 +9,7 @@
       action: generic
     # report_status_update: Running # Update the report
     # change_request: CHG01234 # Change request identifier
+    # change_request_task: CTASK56789 # Change request task identifier
 
     # for reporting
     # report_server: some_host_in_inventory
@@ -18,6 +19,26 @@
     - name: Automation task
       ansible.builtin.debug:
         msg: "{{ task_purpose }}"
+
+    - name: Close a change task | successful
+      when: action == 'close_ctask'
+      tags: snow
+      delegate_to: localhost
+      servicenow.itsm.change_request_task:
+        number: "{{ change_request_task }}"
+        state: closed
+        close_code: successful
+        close_notes: "Automated patching succeeded: {{ awx_job_template_name }} (id: {{ awx_job_id }})"
+
+    - name: Update a change task | unsuccessful
+      when: action == 'update_ctask'
+      tags: snow
+      delegate_to: localhost
+      servicenow.itsm.change_request_task:
+        number: "{{ change_request_task }}"
+        state: closed
+        close_code: unsuccessful
+        close_notes: "Automated patching succeeded: {{ awx_job_template_name }} (id: {{ awx_job_id }})"
 
     - name: Update job status entry
       when:
