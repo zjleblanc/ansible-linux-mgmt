@@ -53,6 +53,7 @@
 
         - name: Modify job status report
           delegate_to: "{{ report_server }}"
+          become: true
           register: r_status_update
           retries: 3
           delay: "{{ 5 | random(seed=inventory_hostname) }}"
