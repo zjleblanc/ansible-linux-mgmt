@@ -27,4 +27,4 @@
     ansible_user: "{{ camper.username }}"
     ansible_password: "{{ camper_password }}"
   ansible.builtin.command:
-    cmd: "fallocate -l {{ camper.size_mb }}M {{ camper.home }}/placeholder.txt"
+    cmd: fallocate -l {{ camper.size_mb }}M {{ camper.home }}/placeholder.txt
